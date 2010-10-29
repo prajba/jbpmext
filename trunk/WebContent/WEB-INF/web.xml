@@ -101,6 +101,10 @@
 	<session-config>
 		<session-timeout>20</session-timeout>
 	</session-config>
+	
+	<welcome-file-list>
+		<welcome-file>/index.jsp</welcome-file>
+	</welcome-file-list>
 
 	<!-- 出错页面定义
 	<error-page>
