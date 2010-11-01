@@ -18,6 +18,13 @@ function initBorderLayout() {
 		resizable: false,
 		collapsable: false
 	});
+	paneNorth.addContent(
+		new DHTMLSuite.paneSplitterContentModel({
+			id: "northContent",
+			htmlElementId: "northContent",
+			tabTitle: "North pane" 
+		}) 
+	);
 	 
 	var paneWest = new DHTMLSuite.paneSplitterPaneModel({
 		position: "west",
@@ -27,23 +34,44 @@ function initBorderLayout() {
 		maxSize: 300,
 		scrollbars: true
 	});
+	paneWest.addContent(
+		new DHTMLSuite.paneSplitterContentModel({
+			id: "westContent",
+			htmlElementId: "westContent",
+			tabTitle: "West pane" 
+		}) 
+	);
 
 	var paneSouth = new DHTMLSuite.paneSplitterPaneModel({
 		position: "south",
 		id: "southPane",
-		size: 60,
-		minSize: 50,
-		maxSize: 130,
-		resizable: false
+		size: 40,
+		scrollbars: false,
+		resizable: false,
+		collapsable: false
 	});
+	paneSouth.addContent(
+		new DHTMLSuite.paneSplitterContentModel({
+			id: "southContent",
+			htmlElementId: "southContent",
+			tabTitle: "South pane" 
+		}) 
+	);
 	 
 	var paneContent = new DHTMLSuite.paneSplitterPaneModel({
 		position: "center",
 		id: "contentPane",
 		size: 150,
-		minSize: 100,
-		maxSize: 200
+		scrollbars: false
 	});
+	paneContent.addContent(
+		new DHTMLSuite.paneSplitterContentModel({
+			id: "workareaContent",
+			htmlElementId: "workareaContent",
+			title: "Workbench",
+			tabTitle: "Workbench pane" 
+		}) 
+	);
 
 	paneModel.addPane(paneSouth);
 	paneModel.addPane(paneNorth);
@@ -62,15 +90,12 @@ $(function() {
 </head>
 
 <body>
-<div id="northPane">
-<s:text name="index.projname"></s:text>
+<div id="northContent"><s:text name="index.projname"></s:text></div>
+<div id="westContent">
 </div>
-<div id="westPane">
+<div id="workareaPlaceholder">
+	<div id="workareaContent"><s:text name="index.welcome"></s:text></div>
 </div>
-<div id="contentPane">
-</div>
-<div id="southPane">
-<s:text name="index.footer.content"></s:text>
-</div>
+<div id="southContent"><s:text name="index.footer.content"></s:text></div>
 </body>
 </html>
