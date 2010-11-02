@@ -8,7 +8,7 @@ CREATE TABLE user_validators
   validator_name character varying(50) NOT NULL,
   remarks character varying(200),
   script_snippet text NOT NULL,
-  is_enabled boolean NOT NULL DEFAULT true,
+  usable_status integer NOT NULL DEFAULT 0,
   CONSTRAINT pk_u_validators PRIMARY KEY (validator_id)
 )
 WITH (
