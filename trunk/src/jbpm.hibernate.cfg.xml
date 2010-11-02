@@ -7,11 +7,11 @@
 <hibernate-configuration>
   <session-factory>
   
-     <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
-     <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
-     <property name="hibernate.connection.url">jdbc:hsqldb:mem:.</property>
-     <property name="hibernate.connection.username">sa</property>
-     <property name="hibernate.connection.password"></property>
+     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+     <property name="hibernate.connection.url">jdbc:postgresql://localhost/jbpmext</property>
+     <property name="hibernate.connection.username">jbpm</property>
+     <property name="hibernate.connection.password">jbpm</property>
      <property name="hibernate.hbm2ddl.auto">create-drop</property>
      <property name="hibernate.format_sql">true</property>
      

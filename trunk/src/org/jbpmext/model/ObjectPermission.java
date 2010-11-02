@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -37,7 +37,7 @@ public class ObjectPermission implements Serializable {
 		this.id = id;
 	}
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="owner_id")
 	public Member getOwner() {
 		return owner;
@@ -46,7 +46,7 @@ public class ObjectPermission implements Serializable {
 		this.owner = owner;
 	}
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="group_id")
 	public Organization getGroup() {
 		return group;
