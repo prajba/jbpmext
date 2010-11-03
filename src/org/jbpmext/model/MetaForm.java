@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="meta_forms")
-public class MetaForm implements Serializable {
+public class MetaForm implements Serializable, Termed {
 	private int id;
 	private String formName;
 	private String tableName;

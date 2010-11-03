@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="organizations")
-public class Organization implements Serializable {
+public class Organization implements Serializable, Termed {
 	private int id;
 	private String name;
 	private Organization parent;
