@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="members")
-public class Member implements Serializable {
+public class Member implements Serializable, Termed {
 	private int id;
 	private String fullName;
 	private String loginName;

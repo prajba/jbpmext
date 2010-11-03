@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="user_validators")
-public class UserValidator implements Serializable {
+public class UserValidator implements Serializable, Usable {
 	private int id;
 	private String name;
 	private String remarks;
