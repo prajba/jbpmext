@@ -26,6 +26,7 @@ import javax.persistence.Table;
 public class Organization implements Serializable, Termed {
 	private int id;
 	private String name;
+	private String code;
 	private Organization parent;
 	private String type;
 	private Date beginTime;
@@ -48,6 +49,14 @@ public class Organization implements Serializable, Termed {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@Column(name="org_code", nullable=false, length=60)
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
 	@ManyToOne

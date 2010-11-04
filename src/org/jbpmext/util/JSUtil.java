@@ -1,4 +1,4 @@
-package org.jbpmext.utils;
+package org.jbpmext.util;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;

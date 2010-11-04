@@ -13,7 +13,7 @@ import org.jbpmext.model.Termed;
  * @author weiht
  *
  */
-public interface TermedDAO {
+public interface TermedDAO extends DAO {
 	/**
 	 * Initialize termed object.
 	 * 

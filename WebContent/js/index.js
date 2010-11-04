@@ -1,3 +1,12 @@
+var __open_urls = {};
+
+function openUrl(url) {
+	var wnd = __open_urls[url];
+	if (!wind) {
+		wnd = asdfaf;
+	}
+}
+
 function initBorderLayout() {
 	var paneModel = new DHTMLSuite.paneSplitterModel();
 	DHTMLSuite.commonObj.setCssCacheStatus(false);
@@ -54,13 +63,13 @@ function initBorderLayout() {
 		position: "center",
 		id: "contentPane",
 		size: 150,
-		scrollbars: false
+		scrollbars: false,
+		closable: false
 	});
 	paneContent.addContent(
 		new DHTMLSuite.paneSplitterContentModel({
 			id: "workareaContent",
 			htmlElementId: "workareaContent",
-			title: "Workbench",
 			tabTitle: "Workbench pane" 
 		}) 
 	);
@@ -75,6 +84,11 @@ function initBorderLayout() {
 	paneSplitter.init();
 }
 
+function initTabs() {
+	$("#tabs").tabs("div.tabpanes > div");
+}
+
 $(function() {
 	initBorderLayout();
+	initTabs();
 });
