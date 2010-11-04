@@ -9,12 +9,11 @@
 </head>
 
 <body>
-<div id="northContent"><s:text name="index.projname"></s:text></div>
-<div id="westContent">
-</div>
+<div id="northContent"><%@ include file="/WEB-INF/content/main/banner.jsp" %></div>
+<div id="westContent"><%@ include file="/WEB-INF/content/main/menu.jsp" %></div>
 <div id="workareaPlaceholder">
-	<div id="workareaContent"><s:text name="index.welcome"></s:text></div>
+	<div id="workareaContent"><%@ include file="/WEB-INF/content/main/desktop.jsp" %></div>
 </div>
-<div id="southContent"><s:text name="index.footer.content"></s:text></div>
+<div id="southContent"><%@ include file="/WEB-INF/content/main/footer.jsp" %></div>
 </body>
 </html>

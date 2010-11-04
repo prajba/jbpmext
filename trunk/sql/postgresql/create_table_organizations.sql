@@ -11,6 +11,7 @@ CREATE TABLE organizations
   usable_status integer NOT NULL DEFAULT 0,
   org_type character varying(20) NOT NULL,
   parent_id integer,
+  org_code character varying(60) NOT NULL,
   CONSTRAINT pk_org_id PRIMARY KEY (org_id),
   CONSTRAINT fk_org_parent_id FOREIGN KEY (parent_id)
       REFERENCES organizations (org_id) MATCH SIMPLE
