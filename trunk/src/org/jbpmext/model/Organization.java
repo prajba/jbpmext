@@ -4,7 +4,9 @@
 package org.jbpmext.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 /**
@@ -24,6 +27,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="organizations")
 public class Organization implements Serializable, Termed {
+	public static final String TYPE_ROLE = "role";
+	
 	private int id;
 	private String name;
 	private String code;
@@ -32,7 +37,8 @@ public class Organization implements Serializable, Termed {
 	private Date beginTime;
 	private Date endTime;
 	private int usableStatus;
-	
+	private List<Organization> children;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="org_id", nullable=false, unique=true, updatable=false)
@@ -98,5 +104,13 @@ public class Organization implements Serializable, Termed {
 	}
 	public void setUsableStatus(int usableStatus) {
 		this.usableStatus = usableStatus;
+	}
+
+	@Transient
+	public List<Organization> getChildren() {
+		return (children == null && !TYPE_ROLE.equals(type)) ? new ArrayList<Organization>() : children;
+	}
+	public void setChildren(List<Organization> children) {
+		this.children = children;
 	}
 }

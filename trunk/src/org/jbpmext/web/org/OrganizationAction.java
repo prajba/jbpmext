@@ -11,6 +11,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.jbpmext.model.Organization;
 import org.jbpmext.service.OrganizationService;
 import org.jbpmext.util.ActionJsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -19,7 +21,8 @@ import com.opensymphony.xwork2.ActionSupport;
  *
  */
 @SuppressWarnings("serial")
-@Namespace(value="org")
+@Namespace(value="/org")
+@Component
 public class OrganizationAction extends ActionSupport {
 	private OrganizationService service;
 
@@ -46,6 +49,7 @@ public class OrganizationAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	@Autowired
 	public void setService(OrganizationService service) {
 		this.service = service;
 	}
