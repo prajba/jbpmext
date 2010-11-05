@@ -11,9 +11,7 @@
 <body>
 <div id="northContent"><%@ include file="/WEB-INF/content/main/banner.jsp" %></div>
 <div id="westContent"><%@ include file="/WEB-INF/content/main/menu.jsp" %></div>
-<div id="workareaPlaceholder">
-	<div id="workareaContent"><%@ include file="/WEB-INF/content/main/desktop.jsp" %></div>
-</div>
+<div id="workareaContent"><%@ include file="/WEB-INF/content/main/desktop.jsp" %></div>
 <div id="southContent"><%@ include file="/WEB-INF/content/main/footer.jsp" %></div>
 </body>
 </html>

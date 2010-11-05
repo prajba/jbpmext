@@ -7,16 +7,20 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
 import org.jbpmext.dao.TermedDAO;
 import org.jbpmext.model.Termed;
 import org.jbpmext.model.UsableStatuses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Component;
 
 /**
  * @author weiht
  *
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
+@Component("dao")
 public class H3TermedDAO extends HibernateDaoSupport implements TermedDAO {
 	@Override
 	public void initTermed(Termed t) {
@@ -68,5 +72,10 @@ public class H3TermedDAO extends HibernateDaoSupport implements TermedDAO {
 	@Override
 	public List find(String statement, Object... parameters) {
 		return getHibernateTemplate().find(statement, parameters);
+	}
+	
+	@Autowired
+	public void setFactory(SessionFactory factory) {
+		super.setSessionFactory(factory);
 	}
 }

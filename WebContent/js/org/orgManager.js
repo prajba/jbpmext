@@ -1,4 +1,3 @@
-using("treegrid");
 $(function() {
 	$("#orgList").treegrid({
 		title: orgMessages.manager.gridTitle,
@@ -9,7 +8,7 @@ $(function() {
 		collapsible: true,
 		url: CONTEXT_ROOT + "/org/orgList.action",
 		idField: "id",
-		treeField: "id",
+		treeField: "name",
 		frozenColumns: [[{title: orgMessages.manager.columns.name, field: "name", width: 240}]],
 		columns: [[{
 			title: orgMessages.manager.columns.code, field: "code", width: 160

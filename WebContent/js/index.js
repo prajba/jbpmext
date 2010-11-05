@@ -1,91 +1,27 @@
-var __open_urls = {};
-
-function openUrl(url) {
-	var wnd = __open_urls[url];
-	if (!wind) {
-		wnd = asdfaf;
+function openUrl(url, eventSrc) {
+	if (url.charAt(0) == '/') url = CONTEXT_ROOT + url;
+	var tabTitle = eventSrc.innerText;
+	if ($("#tabpanes").tabs("exists", tabTitle)) {
+		$("#tabpanes").tabs("select", tabTitle);
+	} else {
+		$("#tabpanes").tabs("add", {
+			title: tabTitle,
+			closable: true,
+			content: "<iframe src='" + url + "' class='filled' frameborder='0' scrolling='auto'></iframe>"
+		});
 	}
 }
 
 function initBorderLayout() {
-	var paneModel = new DHTMLSuite.paneSplitterModel();
-	DHTMLSuite.commonObj.setCssCacheStatus(false);
-	
-	var paneNorth = new DHTMLSuite.paneSplitterPaneModel({
-		position: "north",
-		id: "northPane",
-		size: 65,
-		scrollbars: false,
-		resizable: false,
-		collapsable: false
-	});
-	paneNorth.addContent(
-		new DHTMLSuite.paneSplitterContentModel({
-			id: "northContent",
-			htmlElementId: "northContent",
-			tabTitle: "North pane" 
-		}) 
-	);
-	 
-	var paneWest = new DHTMLSuite.paneSplitterPaneModel({
-		position: "west",
-		id: "westPane",
-		size: 200,
-		minSize: 100,
-		maxSize: 300,
-		scrollbars: true
-	});
-	paneWest.addContent(
-		new DHTMLSuite.paneSplitterContentModel({
-			id: "westContent",
-			htmlElementId: "westContent",
-			tabTitle: "West pane" 
-		}) 
-	);
-
-	var paneSouth = new DHTMLSuite.paneSplitterPaneModel({
-		position: "south",
-		id: "southPane",
-		size: 40,
-		scrollbars: false,
-		resizable: false,
-		collapsable: false
-	});
-	paneSouth.addContent(
-		new DHTMLSuite.paneSplitterContentModel({
-			id: "southContent",
-			htmlElementId: "southContent",
-			tabTitle: "South pane" 
-		}) 
-	);
-	 
-	var paneContent = new DHTMLSuite.paneSplitterPaneModel({
-		position: "center",
-		id: "contentPane",
-		size: 150,
-		scrollbars: false,
-		closable: false
-	});
-	paneContent.addContent(
-		new DHTMLSuite.paneSplitterContentModel({
-			id: "workareaContent",
-			htmlElementId: "workareaContent",
-			tabTitle: "Workbench pane" 
-		}) 
-	);
-
-	paneModel.addPane(paneSouth);
-	paneModel.addPane(paneNorth);
-	paneModel.addPane(paneWest);
-	paneModel.addPane(paneContent);
-
-	var paneSplitter = new DHTMLSuite.paneSplitter();
-	paneSplitter.addModel(paneModel);
-	paneSplitter.init();
+	$("#northContent").attr("region", "north").attr("border", false).height(40);
+	$("#westContent").attr("region", "west").attr("border", false).attr("split", true).width(200);
+	$("#workareaContent").attr("region", "center");
+	$("#southContent").attr("region", "south").attr("border", false).height(25);
+	$("body").layout();
 }
 
 function initTabs() {
-	$("#tabs").tabs("div.tabpanes > div");
+	$("#tabpanes").attr("fit", true).tabs();
 }
 
 $(function() {
