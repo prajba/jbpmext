@@ -18,8 +18,9 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("unchecked")
 @Component("orgnizationService")
 public class OrganizationServiceH3 implements OrganizationService {
-	private static final String HQL_GET_ROOT = "from Organization o where o.parent is null";
-	private static final String HQL_GET_CHILDREN = "from Organization o where o.parent.id = ?";
+	private static final String HQL_ORDER_BY = " order by o.displayOrder asc, o.id asc";
+	private static final String HQL_GET_ROOT = "from Organization o where o.parent is null" + HQL_ORDER_BY;
+	private static final String HQL_GET_CHILDREN = "from Organization o where o.parent.id = ?" + HQL_ORDER_BY;
 	
 	private TermedDAO dao;
 
