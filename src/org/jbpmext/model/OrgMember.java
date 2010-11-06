@@ -27,6 +27,7 @@ public class OrgMember implements Serializable, Termed {
 	private int id;
 	private Organization organization;
 	private Member member;
+	private int displayOrder;
 	private Date beginTime;
 	private Date endTime;
 	private int usableStatus;
@@ -57,6 +58,14 @@ public class OrgMember implements Serializable, Termed {
 	}
 	public void setMember(Member member) {
 		this.member = member;
+	}
+	
+	@Column(name="display_order", nullable=false, columnDefinition="default 0")
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
+	public void setDisplayOrder(int displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 	
 	@Column(name="begin_time", nullable=false)

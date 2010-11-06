@@ -4,9 +4,7 @@
 package org.jbpmext.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 
 /**
@@ -32,12 +29,13 @@ public class Organization implements Serializable, Termed {
 	private int id;
 	private String name;
 	private String code;
+	private int displayOrder;
 	private Organization parent;
 	private String type;
 	private Date beginTime;
 	private Date endTime;
 	private int usableStatus;
-	private List<Organization> children;
+	private String state;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -63,6 +61,14 @@ public class Organization implements Serializable, Termed {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	@Column(name="display_order", nullable=false, columnDefinition="default 0")
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
+	public void setDisplayOrder(int displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 	
 	@ManyToOne
@@ -105,12 +111,12 @@ public class Organization implements Serializable, Termed {
 	public void setUsableStatus(int usableStatus) {
 		this.usableStatus = usableStatus;
 	}
-
-	@Transient
-	public List<Organization> getChildren() {
-		return (children == null && !TYPE_ROLE.equals(type)) ? new ArrayList<Organization>() : children;
+	
+	@Column(name="tree_node_state")
+	public String getState() {
+		return state;
 	}
-	public void setChildren(List<Organization> children) {
-		this.children = children;
+	public void setState(String state) {
+		this.state = state;
 	}
 }
