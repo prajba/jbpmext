@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * CusTabAssorDir entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CusTab_AssorDir", schema = "dbo", catalog = "customtable")
+@Table(name = "CusTab_AssorDir")
 public class CusTabAssorDir implements java.io.Serializable {
 
 	// Fields

@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * CusTabTable entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CusTab_Table", schema = "dbo", catalog = "customtable")
+@Table(name = "CusTab_Table")
 public class CusTabTable implements java.io.Serializable {
 
 	// Fields

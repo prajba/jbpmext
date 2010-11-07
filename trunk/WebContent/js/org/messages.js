@@ -14,6 +14,10 @@ var orgMessages = {
 			stopOrg: "Stop",
 			moveUp: "Move Up",
 			moveDown: "Move Down"
+		},
+		msgs: {
+			noOrgSelected: "You must select an organization first.",
+			confirmOrgDelete: "Are you sure to delete it?"
 		}
 	}
 };
