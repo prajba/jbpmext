@@ -4,12 +4,16 @@
 package org.jbpmext.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +29,8 @@ public class UserValidator implements Serializable, Usable {
 	private String remarks;
 	private String scriptSnippet;
 	private int usableStatus;
-	
+	private List<UserValidatorParameter> parameters;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="validator_id", nullable=false, unique=true, updatable=false)
@@ -52,7 +57,8 @@ public class UserValidator implements Serializable, Usable {
 		this.remarks = remarks;
 	}
 	
-	@Column(name="script_snippet", nullable=false, length=100)
+	@Lob
+	@Column(name="script_snippet", nullable=false)
 	public String getScriptSnippet() {
 		return scriptSnippet;
 	}
@@ -66,5 +72,14 @@ public class UserValidator implements Serializable, Usable {
 	}
 	public void setUsableStatus(int usableStatus) {
 		this.usableStatus = usableStatus;
+	}
+	
+	@OneToMany
+	@JoinColumn(name="validator_id")
+	public List<UserValidatorParameter> getParameters() {
+		return parameters;
+	}
+	public void setParameters(List<UserValidatorParameter> parameters) {
+		this.parameters = parameters;
 	}
 }

@@ -1,25 +1,86 @@
+var showAlert = top.showAlert, showConfirm = top.showConfirm;
+
+function getSelectedOrg() {
+	return $("#orgList").treegrid("getSelected");
+}
+
+//----------Add org----------
+function showAddOrgDialog(porg) {
+	showAlert(top.title, "Not implemented!");
+	return null;
+}
+
+function appendNewOrg(porg, org) {
+	showAlert(top.title, "Not implemented!");
+}
+
 function addChildOrg() {
-	alert("Not implemented!");
+	var porg = getSelectedOrg();
+	if (!porg) {
+		showAlert(top.title, orgMessages.manager.msgs.noOrgSelected);
+	} else {
+		var org = showAddOrgDialog(porg);
+		if (org) {
+			appendNewOrg(porg, org);
+		}
+	}
+}
+//-----------End of add org----------
+
+//--------------Edit org--------------
+function showEditOrgDialog(org) {
+	showAlert(top.title, "Not implemented!");
+	return null;
+}
+
+function updateEditedOrg(org) {
+	showAlert(top.title, "Not implemented!");
 }
 
 function editOrg() {
-	alert("Not implemented!");
+	var org = getSelectedOrg();
+	if (!org) {
+		showAlert(top.title, orgMessages.manager.msgs.noOrgSelected);
+	} else {
+		if (showEditOrgDialog(org))
+			updateEditedOrg(org);
+	}
+}
+//------------End of edit org------------
+
+//------------Delete org--------------
+function doDeleteOrg(org) {
+	showAlert(top.title, "Not implemented!");
+}
+
+function removeOrgNode(org) {
+	showAlert(top.title, "Not implemented!");
 }
 
 function delOrg() {
-	alert("Not implemented!");
+	var org = getSelectedOrg();
+	if (!org) {
+		showAlert(top.title, orgMessages.manager.msgs.noOrgSelected);
+	} else {
+		showConfirm(top.title, orgMessages.manager.msgs.confirmOrgDelete, function(toDel) {
+				if (toDel) {
+					doDeleteOrg(org);
+				}
+			}
+		);
+	}
 }
 
 function stopOrg() {
-	alert("Not implemented!");
+	showAlert(top.title, "Not implemented!");
 }
 
 function moveUp() {
-	alert("Not implemented!");
+	showAlert(top.title, "Not implemented!");
 }
 
 function moveDown() {
-	alert("Not implemented!");
+	showAlert(top.title, "Not implemented!");
 }
 
 $(function() {
@@ -51,7 +112,7 @@ $(function() {
 			text: orgMessages.manager.toolbar.editOrg,
 			iconCls: "icon-edit",
 			handler: editOrg
-		}, {
+		}, "-", {
 			id: "btnDelOrg",
 			text: orgMessages.manager.toolbar.delOrg,
 			iconCls: "icon-remove",
@@ -61,7 +122,7 @@ $(function() {
 			text: orgMessages.manager.toolbar.stopOrg,
 			iconCls: "icon-cancel",
 			handler: stopOrg
-		}, {
+		}, "-", {
 			id: "btnMoveUp",
 			text: orgMessages.manager.toolbar.moveUp,
 			iconCls: "icon-up",

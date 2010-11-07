@@ -1,3 +1,9 @@
+var showAlert = $.messager.alert;
+var showConfirm = $.messager.confirm;
+var showPrompt = $.messager.prompt;
+
+this.title = $("head > title").text();
+
 function openUrl(url, eventSrc) {
 	if (url.charAt(0) == '/') url = CONTEXT_ROOT + url;
 	var tabTitle = eventSrc.innerText;

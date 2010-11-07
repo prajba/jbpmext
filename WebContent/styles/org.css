@@ -1,11 +1,11 @@
 .icon-org-man {
-	background-image: url(../images/org-man.png) no-repeat;
+	background: url(../images/org-man.png) no-repeat;
 }
 
 .icon-up {
-	background-image: url(../images/up.png) no-repeat;
+	background: url(../images/up.png) no-repeat;
 }
 
 .icon-down {
-	background-image: url(../images/down.png) no-repeat;
+	background: url(../images/down.png) no-repeat;
 }
