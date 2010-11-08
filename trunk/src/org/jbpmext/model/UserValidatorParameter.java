@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user_validator_parameters")
 public class UserValidatorParameter implements Serializable {
-	private int id;
+	private Integer id;
 	private String name;
 	private int displayOrder;
 	private String valueType;
@@ -29,10 +29,10 @@ public class UserValidatorParameter implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="parameter_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

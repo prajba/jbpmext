@@ -5,6 +5,8 @@ package org.jbpmext.web.org;
 
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -24,6 +26,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace(value="/org")
 @Component
 public class OrganizationAction extends ActionSupport {
+	private static final Logger logger = LogManager.getLogger(OrganizationAction.class);
 	private OrganizationService service;
 
 	private List<Organization> orgs;
@@ -41,10 +44,15 @@ public class OrganizationAction extends ActionSupport {
 		@Result(name="success", location="/common/json.jsp")
 	})
 	public String list() {
-		if (id == null)
+		if (id == null) {
+			logger.debug("loading root org...");
 			orgs = service.getRoot();
-		else
+		} else {
+			if (logger.isDebugEnabled()) {
+				logger.debug("loading child org for id:" + id);
+			}
 			orgs = service.getChildOrgs(id);
+		}
 		ActionJsonUtil.putJson(orgs);
 		return SUCCESS;
 	}

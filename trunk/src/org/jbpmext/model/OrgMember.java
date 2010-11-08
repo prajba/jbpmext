@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="org_members")
 public class OrgMember implements Serializable, Termed {
-	private int id;
+	private Integer id;
 	private Organization organization;
 	private Member member;
 	private int displayOrder;
@@ -35,10 +35,10 @@ public class OrgMember implements Serializable, Termed {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="org_member_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -60,7 +60,7 @@ public class OrgMember implements Serializable, Termed {
 		this.member = member;
 	}
 	
-	@Column(name="display_order", nullable=false, columnDefinition="default 0")
+	@Column(name="display_order", nullable=false)
 	public int getDisplayOrder() {
 		return displayOrder;
 	}

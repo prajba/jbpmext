@@ -4,6 +4,7 @@
 package org.jbpmext.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,20 +25,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user_validators")
 public class UserValidator implements Serializable, Usable {
-	private int id;
+	private Integer id;
 	private String name;
 	private String remarks;
 	private String scriptSnippet;
 	private int usableStatus;
-	private List<UserValidatorParameter> parameters;
+	private List<UserValidatorParameter> parameters = new ArrayList<UserValidatorParameter>();
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="validator_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -81,5 +82,12 @@ public class UserValidator implements Serializable, Usable {
 	}
 	public void setParameters(List<UserValidatorParameter> parameters) {
 		this.parameters = parameters;
+	}
+	
+	@Override
+	public String toString() {
+		return "[id=" + id + ", name=" + name + ", remarks=" + remarks
+			+ ", usableStatus=" + usableStatus + ", parameters:" + (parameters == null ? 0 : parameters.size())
+			+ ", scriptSnippets: " + scriptSnippet + "]";
 	}
 }

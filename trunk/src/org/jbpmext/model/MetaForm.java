@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="meta_forms")
 public class MetaForm implements Serializable, Termed {
-	private int id;
+	private Integer id;
 	private String formName;
 	private String tableName;
 	private String remarks;
@@ -36,10 +36,10 @@ public class MetaForm implements Serializable, Termed {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="form_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

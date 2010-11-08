@@ -9,26 +9,10 @@
 <script type="text/javascript" src="${ctx}/js/user-validation/messages.js"></script>
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/validation.css"/>
 </head>
-<body><s:property value="validators"/>
+<body>
 <div>
-<table id="vallist">
-<thead>
-<tr>
-	<th width="200"></th>
-	<th width="100"></th>
-	<th width="300"></th>
-</tr>
-</thead>
-<tbody>
-<s:iterator value="validators">
-<tr>
-	<td><s:property value="name"/></td>
-	<td><s:property value="parameters.size()"/></td>
-	<td><s:property value="remarks"/></td>
-</tr>
-</s:iterator>
-</tbody>
-</table>
+<div id="vallist">
+</div>
 </div>
 </body>
 </html>
