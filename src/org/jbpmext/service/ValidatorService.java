@@ -14,5 +14,6 @@ import org.jbpmext.model.UserValidator;
  */
 public interface ValidatorService {
 	public void setDao(TermedDAO dao);
+	public void save(UserValidator validator);
 	public List<UserValidator> findAllValidators();
 }

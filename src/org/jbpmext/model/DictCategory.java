@@ -18,17 +18,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user_dict_categories")
 public class DictCategory implements Serializable {
-	private int id;
+	private Integer id;
 	private String displayName;
 	private String valueType;
 	private String tableName;
 	
 	@Id
 	@Column(name="category_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

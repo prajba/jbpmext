@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="meta_fields")
 public class MetaField implements Serializable, Usable {
-	private int id;
+	private Integer id;
 	private MetaForm form;
 	private String fieldName;
 	private String columnName;
@@ -39,10 +39,10 @@ public class MetaField implements Serializable, Usable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="field_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

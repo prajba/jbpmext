@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="members")
 public class Member implements Serializable, Termed {
-	private int id;
+	private Integer id;
 	private String fullName;
 	private String loginName;
 	private String loginPassword;
@@ -32,10 +32,10 @@ public class Member implements Serializable, Termed {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="member_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

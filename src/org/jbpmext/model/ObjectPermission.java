@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="obj_permissions")
 public class ObjectPermission implements Serializable {
-	private int id;
+	private Integer id;
 	private Member owner;
 	private Organization group;
 	private int permission;
@@ -30,10 +30,10 @@ public class ObjectPermission implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="obj_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

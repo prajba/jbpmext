@@ -26,7 +26,7 @@ import javax.persistence.Table;
 public class Organization implements Serializable, Termed {
 	public static final String TYPE_ROLE = "role";
 	
-	private int id;
+	private Integer id;
 	private String name;
 	private String code;
 	private int displayOrder;
@@ -40,10 +40,10 @@ public class Organization implements Serializable, Termed {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="org_id", nullable=false, unique=true, updatable=false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -63,7 +63,7 @@ public class Organization implements Serializable, Termed {
 		this.code = code;
 	}
 	
-	@Column(name="display_order", nullable=false, columnDefinition="default 0")
+	@Column(name="display_order", nullable=false)
 	public int getDisplayOrder() {
 		return displayOrder;
 	}
