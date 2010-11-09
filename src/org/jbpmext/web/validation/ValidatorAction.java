@@ -3,6 +3,7 @@
  */
 package org.jbpmext.web.validation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -13,6 +14,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.jbpmext.model.UserValidator;
 import org.jbpmext.service.ValidatorService;
 import org.jbpmext.util.ActionJsonUtil;
+import org.jbpmext.util.EasyUIGridWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -25,6 +27,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("/validation")
 public class ValidatorAction extends ActionSupport {
 	private static final Logger logger = LogManager.getLogger(ValidatorAction.class);
+	@Autowired
 	private ValidatorService service;
 
 	private List<UserValidator> validators;
@@ -39,8 +42,13 @@ public class ValidatorAction extends ActionSupport {
 	
 	@Action(value="list", results={@Result(name="success", location="/common/json.jsp")})
 	public String list() {
-		validators = service.findAllValidators();
-		ActionJsonUtil.putJson(validators);
+		try {
+			validators = service.findAllValidators();
+		} catch (Exception ex) {
+			logger.error("Loading user defined validators:", ex);
+			validators = new ArrayList<UserValidator>();
+		}
+		ActionJsonUtil.putJson(new EasyUIGridWrapper(validators));
 		return SUCCESS;
 	}
 	
@@ -64,6 +72,18 @@ public class ValidatorAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	@Action(value="remove", results={@Result(name="success", location="/common/json.jsp")})
+	public String remove() {
+		try {
+			service.remove(validator);
+		} catch (Exception ex) {
+			validator.setId(null);
+			logger.error("Removing user defined validator:", ex);
+		}
+		ActionJsonUtil.putJson(validator);
+		return SUCCESS;
+	}
+	
 	public List<UserValidator> getValidators() {
 		return validators;
 	}
@@ -72,15 +92,6 @@ public class ValidatorAction extends ActionSupport {
 		this.validators = validators;
 	}
 	
-	public ValidatorService getService() {
-		return service;
-	}
-
-	@Autowired
-	public void setService(ValidatorService service) {
-		this.service = service;
-	}
-
 	public UserValidator getValidator() {
 		return validator;
 	}

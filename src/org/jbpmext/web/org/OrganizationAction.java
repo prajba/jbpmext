@@ -27,6 +27,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Component
 public class OrganizationAction extends ActionSupport {
 	private static final Logger logger = LogManager.getLogger(OrganizationAction.class);
+	@Autowired
 	private OrganizationService service;
 
 	private List<Organization> orgs;
@@ -57,11 +58,6 @@ public class OrganizationAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	@Autowired
-	public void setService(OrganizationService service) {
-		this.service = service;
-	}
-
 	public List<Organization> getOrgs() {
 		return orgs;
 	}

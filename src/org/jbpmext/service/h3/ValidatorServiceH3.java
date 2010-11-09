@@ -51,4 +51,12 @@ public class ValidatorServiceH3 implements ValidatorService {
 		else
 			dao.add(validator);
 	}
+
+	@Override
+	public void remove(UserValidator toRemove) {
+		if (toRemove == null) return;
+		Integer id = toRemove.getId();
+		if (id == null || id <= 0) return;
+		dao.remove(dao.get(toRemove.getClass(), toRemove.getId()));
+	}
 }

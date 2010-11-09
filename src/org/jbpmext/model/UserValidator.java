@@ -50,7 +50,7 @@ public class UserValidator implements Serializable, Usable {
 		this.name = name;
 	}
 	
-	@Column(name="remarks", nullable=false, length=100)
+	@Column(name="remarks", length=100)
 	public String getRemarks() {
 		return remarks;
 	}

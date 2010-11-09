@@ -7,6 +7,7 @@ function getSelectedValidator() {
 function saveValidator(val) {
 	var isNew = val.id === undefined;
 	$.post(CONTEXT_ROOT + "/validation/save.action", {
+		"validator.id": val.id || "",
 		"validator.name": val.name,
 		"validator.scriptSnippet": val.scriptSnippet,
 		"validator.remarks": val.remarks
@@ -37,6 +38,7 @@ function addValidator() {
 
 //------------Edit validator----------
 function showEditValidatorDialog(val) {
+	window.editingValidator = val;
 	top.showEditorDialog({
 		url: CONTEXT_ROOT + "/validation/editor.action",
 		data: val,
@@ -46,7 +48,7 @@ function showEditValidatorDialog(val) {
 }
 
 function updateEditedValidator(val) {
-	var ix = $("#vallist").datagrid("getRowIndex", val);
+	var ix = $("#vallist").datagrid("getRowIndex", val.id);
 	if (ix >= 0) {
 		$("#vallist").datagrid("selectRow", ix);
 		$.extend(true, $("#vallist").datagrid("getSelected"), val);
@@ -66,11 +68,16 @@ function editValidator() {
 
 //-----------Delete validator----------
 function doDeleteValidator(val) {
-	showAlert(top.title, "Not implemented.");
+	$.post(CONTEXT_ROOT + "/validation/remove.action", {
+		"validator.id": val.id
+	}, function(nval) {
+		if (nval.id)
+			removeValidatorNode(val);
+	}, "json");
 }
 
 function removeValidatorNode(val) {
-	showAlert(top.title, "Not implemented.");
+	$("#vallist").datagrid("deleteRow", $("#vallist").datagrid("getRowIndex", val.id));
 }
 
 function delValidator() {
@@ -93,6 +100,7 @@ $(function() {
 		iconCls: "icon-val-man",
 		url: CONTEXT_ROOT + "/validation/list.action",
 		striped: true,
+		singleSelect: true,
 		sortName: "name",
 		sortOrder: "asc",
 		idField: "id",
@@ -111,7 +119,6 @@ $(function() {
 			field: "remarks",
 			width: 300
 		}]],
-		pagination: true,
 		rownumbers: true,
 		toolbar: [{
 			id: "addValidator",

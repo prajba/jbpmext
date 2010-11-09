@@ -18,6 +18,8 @@ function addChildOrg() {
 	var porg = getSelectedOrg();
 	if (!porg) {
 		showAlert(top.title, orgMessages.manager.msgs.noOrgSelected);
+	} else if (porg.type == "role") {
+		showAlert(top.title, orgMessages.manager.msgs.noChildPermitted);
 	} else {
 		var org = showAddOrgDialog(porg);
 		if (org) {
