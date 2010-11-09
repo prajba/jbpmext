@@ -7,6 +7,7 @@ this.title = $("head > title").text();
 function showEditorDialog(conf, wnd) {
 	var windowName = conf.name || "";
 	var url = conf.url || "about:blank";
+	url = url + (url.indexOf("?") >= 0 ? "&" : "?") + "rndseq=" + Math.random();
 	var w = conf.width ? ",width=" + conf.width : "", h = conf.height ? ",height=" + conf.height : "";
 	var nwnd = window.open(url, windowName, "scrollbars=no,toolbar=no,location=no,directories=no,status=no,menubar=no" + w + h);
 	window.__editorWindow = nwnd;

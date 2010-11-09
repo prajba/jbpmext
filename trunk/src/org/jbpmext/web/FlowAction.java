@@ -56,10 +56,10 @@ public class FlowAction extends ActionSupport {
 	@Action(value = "edit")
 	public String edit() {
 		System.out.println("===========");
-		this.table = this.tableListDao.findById(this.tableid);
-		if(this.table.getFlowDescribe()==null){
-			this.table.setFlowDescribe("{}");
-		}
+//		this.table = this.tableListDao.findById(this.tableid);
+//		if(this.table.getFlowDescribe()==null){
+//			this.table.setFlowDescribe("{}");
+//		}
 		return SUCCESS;
 	}
 

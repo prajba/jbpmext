@@ -17,6 +17,7 @@ var orgMessages = {
 		},
 		msgs: {
 			noOrgSelected: "You must select an organization first.",
+			noChildPermitted: "This type of organization will have no child.",
 			confirmOrgDelete: "Are you sure to delete it?"
 		}
 	}

@@ -4,14 +4,12 @@
 <%@ include file="/common/taglibs.jsp"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><%@ include file="/common/scripts.jsp" %>
 <link type="text/css"
 	href="${ctx}/js/myflow/lib/jquery-ui-1.8.4.custom/css/smoothness/jquery-ui-1.8.4.custom.css"
 	rel="stylesheet" />
 
 <script type="text/javascript" src="${ctx}/js/myflow/lib/raphael.js"></script>
-<script type="text/javascript"
-	src="${ctx}/js/myflow/lib/jquery-ui-1.8.4.custom/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript"
 	src="${ctx}/js/myflow/lib/jquery-ui-1.8.4.custom/js/jquery-ui-1.8.4.custom.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/myflow/myflow.js"></script>
@@ -23,7 +21,7 @@
 				.myflow(
 						{
 							basePath : "${ctx}/js/myflow/",
-							restore : ${table.flowDescribe},
+							restore : "${table.flowDescribe}",
 							tools : {
 								save : {
 									onclick : function(data) {
