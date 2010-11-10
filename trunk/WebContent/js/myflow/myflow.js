@@ -1217,9 +1217,9 @@
 	};
 
 	myflow.props = function(o, r) {
-		var _this = this, _pdiv = $('#myflow_props').hide().draggable({
+		var _this = this, _pdiv = $('#myflow_props').hide()/*.draggable({
 					handle : '#myflow_props_handle'
-				}).resizable().css(myflow.config.props.attr).bind('click',
+				}).resizable().css(myflow.config.props.attr)*/.bind('click',
 				function() {
 					return false;
 				}), _tb = _pdiv.find('table'), _r = r, _src;
@@ -1355,11 +1355,11 @@
 		$(_r).data('mod', 'point');
 		if (myflow.config.editable) {
 			// 工具栏
-			$("#myflow_tools").draggable({
+			/*$("#myflow_tools").draggable({
 						handle : '#myflow_tools_handle'
-					}).css(myflow.config.tools.attr);
+					}).css(myflow.config.tools.attr);*/
 
-			$('#myflow_tools .node').hover(function() {
+			$('#myflow_tools div.node').hover(function() {
 						$(this).addClass('mover');
 					}, function() {
 						$(this).removeClass('mover');

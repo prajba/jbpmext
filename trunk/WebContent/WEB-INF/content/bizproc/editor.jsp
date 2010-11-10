@@ -7,26 +7,17 @@
 <%@ include file="/common/scripts.jsp" %>
 <script type="text/javascript" src="${ctx}/js/bizproc/editor.js"></script>
 </head>
-<body>
-<div id="myflow_tools"
-	style="position: absolute; top: 10; left: 10; background-color: #fff; width: 70px; cursor: default; padding: 3px;"
-	class="ui-widget-content">
-<div id="myflow_tools_handle" style="text-align: center;"
-	class="ui-widget-header">工具集</div>
-
-
-<div class="node" id="myflow_save"><img
-	src="${ctx}/js/myflow/img/save.gif" />&nbsp;&nbsp;保存</div>
-<div>
+<body class="easyui-layout">
+<div id="myflow_tools" region="west" title="工具集"
+	style="background-color: #fff; width: 60px; cursor: default;">
+<a href="javascript:void(0);" iconCls="icon-save" plain="true"
+	class="node easyui-linkbutton" id="myflow_save">保存</a>
 <hr />
-</div>
-<div class="node selectable" id="pointer"><img
-	src="${ctx}/js/myflow/img/select16.gif" />&nbsp;&nbsp;选择</div>
-<div class="node selectable" id="path"><img
-	src="${ctx}/js/myflow/img/16/flow_sequence.png" />&nbsp;&nbsp;转换</div>
-<div>
+<a href="javascript:void(0);" iconCls="icon-select" plain="true"
+	class="node selectable easyui-linkbutton" id="pointer">选择</a>
+<a href="javascript:void(0);" iconCls="icon-transit" plain="true"
+	class="node selectable easyui-linkbutton" id="path">转换</a>
 <hr />
-</div>
 <div class="node state" id="start" type="start"><img
 	src="${ctx}/js/myflow/img/16/start_event_empty.png" />&nbsp;&nbsp;开始</div>
 
@@ -47,20 +38,12 @@
 	src="${ctx}/js/myflow/img/16/end_event_error.png" />&nbsp;&nbsp;错误</div>
 </div>
 
-<div id="myflow_props"
-	style="position: absolute; top: 30; right: 50; background-color: #fff; width: 220px; padding: 3px;"
-	class="ui-widget-content">
-<div id="myflow_props_handle" class="ui-widget-header">属性</div>
-<table border="1" width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td>aaa</td>
-	</tr>
-	<tr>
-		<td>aaa</td>
-	</tr>
+<div region="east" title="属性" split="true"
+	style="background-color: #fff; width: 240px; padding: 3px;">
+<div id="myflow_props">
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="proped">
 </table>
-<div>&nbsp;</div>
-</div>
-<div id="designer"></div>
+</div></div>
+<div id="designer" region="center"></div>
 </body>
 </html>
