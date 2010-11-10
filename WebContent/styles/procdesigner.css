@@ -6,23 +6,29 @@ body {
 	font-size: 12px;
 	line-height: 1.5;
 	color: black;
-	background-image: url(../js/myflow/img/bg.png);
 }
 
 .node {
-	width: 70px;
 	text-align: center;
 	vertical-align: middle;
 	border: 1px solid #fff;
 }
 
 .mover {
-	border: 1px solid #ddd;
-	background-color: #ddd;
+	border: 1px solid #DDDDDD;
+	background-color: #EEDDFF;
 }
 
 .selected {
-	background-color: #ddd;
+	background-color: #DDDDFF!important;
+}
+
+.icon-select {
+	background: url(../js/myflow/img/select16.gif) no-repeat;
+}
+
+.icon-transit {
+	background: url(../js/myflow/img/16/flow_sequence.png) no-repeat;
 }
 
 .state {
@@ -37,11 +43,9 @@ body {
 	letter-spacing: 2px;
 	text-align: left;
 	padding: 6px;
-	background: #ddd;
 }
 
 #myflow_props td {
-	background: #fff;
 	padding: 6px;
 }
 
@@ -63,4 +67,18 @@ body {
 #state {
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+#designer {
+	background-image: url(../js/myflow/img/bg.png);
+}
+
+table.proped {
+	border-top: 1px solid #AABBFF;
+	border-left: 1px solid #AABBFF;
+}
+
+table.proped td, th {
+	border-right: 1px solid #AABBFF;
+	border-bottom: 1px solid #AABBFF;
 }
