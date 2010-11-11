@@ -1,20 +1,27 @@
 var showAlert = top.showAlert, showConfirm = top.showConfirm;
 
-function getSelectedProc() {
+function getSelectedProcess() {
 	return $("#proclist").datagrid("getSelected");
 }
 
-function saveProcess(proc) {
-	var isNew = proc.id === undefined;
-	//TODO Post process definition data
-	$.post(CONTEXT_ROOT + "/bizproc/save.action", {
-		"definition.id": proc.id,
-		"definition.name": proc.name
-	}, function(nproc) {
-		var fn = isNew ? appendNewProc : updateEditedProc;
-		fn(nproc);
-		top.closeEditorDialog();
-	}, "json");
+function saveProcess(proc, data, callback) {
+	var isNew = !window.editingProcess;
+	$.ajax({
+		type: "POST",
+		url: CONTEXT_ROOT + "/bizproc/save.action",
+		data: {
+			id: proc.id,
+			data: data
+		},
+		success: function(nproc) {
+			if (typeof nproc != "string") {
+				var fn = isNew ? appendNewProc : updateEditedProc;
+				fn(nproc);
+				top.closeEditorDialog();
+			}
+			callback(nproc);
+		}
+	});
 }
 
 //-----------Add proc-----------
