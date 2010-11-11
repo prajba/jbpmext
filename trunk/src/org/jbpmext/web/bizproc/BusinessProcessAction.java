@@ -19,9 +19,13 @@ import org.apache.struts2.convention.annotation.Result;
 import org.jbpm.api.ProcessDefinition;
 import org.jbpm.api.RepositoryService;
 import org.jbpmext.util.ActionJsonUtil;
-import org.jbpmext.util.EasyUIGridWrapper;
+import org.jbpmext.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.Configuration;
@@ -41,6 +45,7 @@ public class BusinessProcessAction extends ActionSupport {
 	private List<ProcessDefinition> definitions;
 	private ProcessDefinition definition;
 	private String data;
+	private String id;
 
 	@Override
 	@Action(value="manager", results={@Result(name="success", location="/WEB-INF/content/bizproc/manager.jsp")})
@@ -56,16 +61,28 @@ public class BusinessProcessAction extends ActionSupport {
 			logger.error("Loading process definitions:", ex);
 			definitions = new ArrayList<ProcessDefinition>();
 		}
-		ActionJsonUtil.putJson(new EasyUIGridWrapper(procDefsToStrings(definitions)));
+		ActionJsonUtil.putJson(procDefsToString(definitions));
 		return SUCCESS;
 	}
 	
-	private List<String> procDefsToStrings(List<ProcessDefinition> defs) {
-		List<String> result = new ArrayList<String>(defs.size());
+	private String procDefsToString(List<ProcessDefinition> defs) {
+		StringBuilder buff = new StringBuilder();
+		Gson g = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+			@Override
+			public boolean shouldSkipField(FieldAttributes fattr) {
+				return fattr.getDeclaredClass() != String.class;
+			}
+			
+			@Override
+			public boolean shouldSkipClass(Class<?> clazz) {
+				return false;
+			}
+		}).create();
 		for (ProcessDefinition def: defs) {
-			//def.
+			if (buff.length() > 1) buff.append(',');
+			buff.append(g.toJson(def));
 		}
-		return result;
+		return "{\"total\":" + defs.size() + ",\"rows\":[" + buff + "]}";
 	}
 
 	@Action(value="save", results={@Result(name="success", location="/common/json.jsp")})
@@ -76,15 +93,20 @@ public class BusinessProcessAction extends ActionSupport {
 
 		Configuration config = new Configuration();
 		try {
-
 			config.setDirectoryForTemplateLoading(new File(ServletActionContext
 					.getServletContext().getRealPath("/WEB-INF/classes/freemarker/")));
 			Template temp = config.getTemplate("jpdl-template.tpl", "utf-8");
 			StringWriter w = new StringWriter();
 			temp.process(dataMap, w);
 			logger.debug(w);
-			this.repositoryService.createDeployment().addResourceFromString(
-					"test.jpdl.xml", w.toString()).deploy();
+			ProcessDefinition def;
+			if (StringUtil.isEmpty(id)
+					|| (def = repositoryService.createProcessDefinitionQuery().processDefinitionId(id).uniqueResult()) == null) {
+				repositoryService.createDeployment().addResourceFromString(
+						"test.jpdl.xml", w.toString()).deploy();
+			} else {
+				//def.
+			}
 			ActionJsonUtil.putJson(data);
 		} catch (Exception ex) {
 			logger.error("Saving process definition:", ex);
@@ -112,5 +134,13 @@ public class BusinessProcessAction extends ActionSupport {
 
 	public void setData(String data) {
 		this.data = data;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

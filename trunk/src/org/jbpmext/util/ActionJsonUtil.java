@@ -27,6 +27,11 @@ public class ActionJsonUtil {
 		ServletActionContext.getRequest().setAttribute(REQ_JSON_ATTR, json);
 	}
 	
+	public static void putJson(String s) {
+		logger.debug(s);
+		ServletActionContext.getRequest().setAttribute(REQ_JSON_ATTR, s);
+	}
+	
 	public static String getJson() {
 		return (String)ServletActionContext.getRequest().getAttribute(REQ_JSON_ATTR);
 	}

@@ -9,20 +9,17 @@ INCLUDE([
 ]);
 
 function initDesigner() {
+	window.editingProc = opener.__editorOpener.editingProcess || {};
+	eval("var d = " + window.editingProc.description + ";");
 	$("#designer").myflow({
 		basePath: CONTEXT_ROOT + "/js/myflow/",
+		restore: d,
 		tools: {
 			save: {
 				onclick: function(data) {
-					$.ajax({
-						type: "POST",
-						url: CONTEXT_ROOT + "/bizproc/save.action",
-						data: {
-							data: data
-						},
-						success: function(msg) {
+					opener.__editorOpener.saveProcess(window.editingProc, data, function(msg) {
+						if (typeof msg == "string")
 							alert(msg);
-						}
 					});
 				}
 			}
