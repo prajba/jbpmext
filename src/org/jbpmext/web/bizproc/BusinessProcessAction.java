@@ -17,9 +17,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.jbpm.api.ProcessDefinition;
+import org.jbpm.api.ProcessDefinitionQuery;
 import org.jbpm.api.RepositoryService;
 import org.jbpmext.util.ActionJsonUtil;
-import org.jbpmext.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.ExclusionStrategy;
@@ -56,7 +56,11 @@ public class BusinessProcessAction extends ActionSupport {
 	@Action(value="list", results={@Result(name="success", location="/common/json.jsp")})
 	public String list() throws Exception {
 		try {
-			definitions = repositoryService.createProcessDefinitionQuery().list();
+			List<ProcessDefinition> defs = repositoryService.createProcessDefinitionQuery()
+				.orderAsc(ProcessDefinitionQuery.PROPERTY_KEY)
+				.orderDesc(ProcessDefinitionQuery.PROPERTY_VERSION)
+				.list();
+			definitions = onlyMaxVerDefs(defs);
 		} catch (Exception ex) {
 			logger.error("Loading process definitions:", ex);
 			definitions = new ArrayList<ProcessDefinition>();
@@ -65,12 +69,24 @@ public class BusinessProcessAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	private List<ProcessDefinition> onlyMaxVerDefs(List<ProcessDefinition> defs) {
+		List<ProcessDefinition> result = new ArrayList<ProcessDefinition>(defs.size());
+		for (ProcessDefinition def: defs) {
+			if (result.size() == 0 || !result.get(result.size() - 1).getKey().equals(def.getKey())) {
+				result.add(def);
+			}
+		}
+		return result;
+	}
+
 	private String procDefsToString(List<ProcessDefinition> defs) {
 		StringBuilder buff = new StringBuilder();
 		Gson g = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+			@SuppressWarnings("rawtypes")
 			@Override
 			public boolean shouldSkipField(FieldAttributes fattr) {
-				return fattr.getDeclaredClass() != String.class;
+				Class c = fattr.getDeclaredClass();
+				return c != String.class && c != Integer.TYPE;
 			}
 			
 			@Override
@@ -90,6 +106,7 @@ public class BusinessProcessAction extends ActionSupport {
 		logger.debug(data);
 		JSONObject dataMap = JSONObject.fromObject(data);
 		dataMap.put("myflowdata", "<![CDATA[" + data + "]]>");
+		dataMap.put("myflowkey", id);
 
 		Configuration config = new Configuration();
 		try {
@@ -99,18 +116,12 @@ public class BusinessProcessAction extends ActionSupport {
 			StringWriter w = new StringWriter();
 			temp.process(dataMap, w);
 			logger.debug(w);
-			ProcessDefinition def;
-			if (StringUtil.isEmpty(id)
-					|| (def = repositoryService.createProcessDefinitionQuery().processDefinitionId(id).uniqueResult()) == null) {
-				repositoryService.createDeployment().addResourceFromString(
-						"test.jpdl.xml", w.toString()).deploy();
-			} else {
-				//def.
-			}
+			logger.debug(repositoryService.createDeployment().addResourceFromString(
+					"test.jpdl.xml", w.toString()).deploy());
 			ActionJsonUtil.putJson(data);
 		} catch (Exception ex) {
 			logger.error("Saving process definition:", ex);
-			ActionJsonUtil.putJson(new Object());
+			ActionJsonUtil.putJson(ex);
 		}
 		return SUCCESS;
 	}

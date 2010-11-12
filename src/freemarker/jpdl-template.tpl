@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<process key="${props.props.key.value}" name="${props.props.name.value}" xmlns="http://jbpm.org/4.4/jpdl">
+<process key="${myflowkey}" name="${props.props.name.value}" xmlns="http://jbpm.org/4.4/jpdl">
 	<description>${myflowdata}</description>
 	
 	<on  event="start">

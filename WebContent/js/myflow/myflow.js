@@ -1431,6 +1431,7 @@
 			// var data = ((typeof o.restore === 'string') ? eval(o.restore) :
 			// o.restore);
 			var data = o.restore;
+			myflow.config.props.props.name.value = data.props.props.name.value;
 			var rmap = {};
 			if (data.states) {
 				for (var k in data.states) {
