@@ -5,22 +5,24 @@ function getSelectedProcess() {
 }
 
 function saveProcess(proc, data, callback) {
-	var isNew = !window.editingProcess;
+	var isNew = !proc.key;
 	$.ajax({
 		type: "POST",
 		url: CONTEXT_ROOT + "/bizproc/save.action",
 		data: {
-			id: proc.id,
+			id: proc.key,
 			data: data
 		},
 		success: function(nproc) {
+			alert(typeof nproc);
 			if (typeof nproc != "string") {
 				var fn = isNew ? appendNewProc : updateEditedProc;
 				fn(nproc);
 				top.closeEditorDialog();
 			}
 			callback(nproc);
-		}
+		},
+		dataType: "json"
 	});
 }
 
@@ -52,7 +54,7 @@ function showEditProcessDialog(proc) {
 }
 
 function updateEditedProc(proc) {
-	var ix = $("#proclist").datagrid("getRowIndex", proc.id);
+	var ix = $("#proclist").datagrid("getRowIndex", proc.key);
 	if (ix >= 0) {
 		$("#proclist").datagrid("selectRow", ix);
 		$.extend(true, $("#proclist").datagrid("getSelected"), proc);
@@ -84,7 +86,7 @@ $(function() {
 		rownumbers: true,
 		sortName: "name",
 		sortOrder: "asc",
-		idField: "id",
+		idField: "key",
 		frozenColumns: [[{
 			title: procMessages.manager.columns.name,
 			field: "name",
