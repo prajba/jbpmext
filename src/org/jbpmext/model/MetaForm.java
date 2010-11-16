@@ -31,8 +31,10 @@ public class MetaForm implements Serializable, Termed {
 	private Date beginTime;
 	private Date endTime;
 	private int usableStatus;
-	
+	private boolean sysPreset;
+	private int version;
 	private List<MetaField> fields;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="form_id", nullable=false, unique=true, updatable=false)
@@ -97,6 +99,22 @@ public class MetaForm implements Serializable, Termed {
 	}
 	public void setUsableStatus(int usableStatus) {
 		this.usableStatus = usableStatus;
+	}
+
+	@Column(name="sys_preset")
+	public boolean isSysPreset() {
+		return sysPreset;
+	}
+	public void setSysPreset(boolean sysPreset) {
+		this.sysPreset = sysPreset;
+	}
+	
+	@Column(name="version", nullable=false)
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	@OneToMany(mappedBy="form")
