@@ -6,9 +6,10 @@
 <%@ include file="/common/styles.jsp" %>
 <%@ include file="/common/scripts.jsp" %>
 <script type="text/javascript" src="${ctx}/js/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="${ctx}/js/metaform/editor.js"></script>
+<script type="text/javascript" src="${ctx}/js/ckeditor/adapters/jquery.js"></script>
 <script type="text/javascript" src="${ctx}/js/editor-dialog.js"></script>
 <script type="text/javascript" src="${ctx}/js/edt-dlg-msgs.js"></script>
+<script type="text/javascript" src="${ctx}/js/metaform/editor.js"></script>
 </head>
 <body>
 <div class="inner-layout">

@@ -30,6 +30,7 @@ public class FormAction extends ActionSupport {
 	private FormService service;
 	
 	private List<MetaForm> forms;
+	private MetaForm form;
 
 	@Override
 	@Action(value="manager", results={@Result(name="success", location="/WEB-INF/content/metaform/manager.jsp")})
@@ -51,5 +52,28 @@ public class FormAction extends ActionSupport {
 	@Action(value="editor", results={@Result(name="success", location="/WEB-INF/content/metaform/editor.jsp")})
 	public String edit() throws Exception {
 		return SUCCESS;
+	}
+	
+	@Action(value="save", results={@Result(name="success", location="/common/json.jsp")})
+	public String save() throws Exception {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Saving meta form: " + form);
+		}
+		try {
+			service.save(form);
+			ActionJsonUtil.putJson(form);
+		} catch (RuntimeException ex) {
+			logger.error("Error saving form: ", ex);
+			throw ex;
+		}
+		return SUCCESS;
+	}
+
+	public MetaForm getForm() {
+		return form;
+	}
+
+	public void setForm(MetaForm form) {
+		this.form = form;
 	}
 }

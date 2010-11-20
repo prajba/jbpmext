@@ -1,10 +1,9 @@
 CKEDITOR.plugins.add('zforms', {
-	availableLangCodes: {"zh-cn": "1"},
+	availableLangCodes: {"zh-cn": "zh-cn", "en": "en"},
 	
-	loadLang: function() {
+	loadLang: function(editor) {
 		var langCode = editor.langCode;
-		alert(langCode);
-		langCode = this.availableLangCodes[langCode] ? langCode : 'zh-cn';
+		langCode = this.availableLangCodes[langCode] ? langCode : 'en';
 
 		CKEDITOR.scriptLoader.load(
 			CKEDITOR.getUrl( this.path + 'lang/' + langCode + '.js' ),
@@ -15,13 +14,12 @@ CKEDITOR.plugins.add('zforms', {
 	},
 	
 	init : function(editor) {
-		this.loadLang();
+		this.loadLang(editor);
 		
 		var lang = editor.lang;
 	
 		var addButtonCommand = function(buttonName, commandName, dialogFile) {
 			editor.addCommand(commandName, new CKEDITOR.dialogCommand(commandName));
-	alert(buttonName.toLowerCase());
 			editor.ui.addButton(buttonName, {
 				label : lang.common[buttonName.toLowerCase()],
 				command : commandName

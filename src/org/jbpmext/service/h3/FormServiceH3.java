@@ -10,12 +10,14 @@ import org.jbpmext.model.MetaForm;
 import org.jbpmext.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author weiht
  *
  */
 @Component("metaformService")
+@Transactional
 public class FormServiceH3 implements FormService {
 	private static final String HQL_FIND_ALL = "from MetaForm f";
 	
@@ -31,5 +33,15 @@ public class FormServiceH3 implements FormService {
 	@Override
 	public List<MetaForm> findAllForms() {
 		return dao.find(HQL_FIND_ALL);
+	}
+
+	@Override
+	public void save(MetaForm form) {
+		if (form.getId() == null) {
+			dao.initTermed(form);
+			dao.add(form);
+		} else {
+			dao.update(form);
+		}
 	}
 }
