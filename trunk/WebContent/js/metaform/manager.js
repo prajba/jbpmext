@@ -4,12 +4,29 @@ function getSelectedForm() {
 	return $("#formlist").datagrid("getSelected");
 }
 
-function saveForm(form) {
-	showAlert(top.title, form);
+function saveForm(frm) {
+	var isNew = frm.id === undefined;
+	$.post(CONTEXT_ROOT + "/metaform/save.action", {
+		"form.id": frm.id || "",
+		"form.formName": frm.formName,
+		"form.tableName": frm.tableName,
+		"form.formHtml": frm.formHtml,
+		"form.beginTime": frm.beginTime,
+		"form.endTime": frm.endTime,
+		"form.usableStatus": frm.usableStatus,
+		"form.sysPreset": frm.sysPreset,
+		"form.version": frm.version,
+		"form.remarks": frm.remarks
+	}, function(nfrm) {
+		var fn = isNew ? appendNewForm : updateEditedForm;
+		fn(nfrm);
+		top.closeEditorDialog();
+	}, "json");
 }
 
 //----------Add form---------
 function showAddFormDialog() {
+	window.editingForm = {};
 	top.showEditorDialog({
 		url: CONTEXT_ROOT + "/metaform/editor.action",
 		name: "metaFormEditor"

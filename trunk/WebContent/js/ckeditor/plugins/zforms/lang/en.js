@@ -1,4 +1,4 @@
-CKEDITOR.plugins.setLang("ztextfield", "zh-cn", {
+CKEDITOR.plugins.setLang("ztextfield", "en", {
 	ztextfield: {
 		title: "Text"
 	}
