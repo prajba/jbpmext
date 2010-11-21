@@ -1,195 +1,111 @@
-﻿CKEDITOR.dialog.add( 'ztextfield', function( editor )
-{
-	var autoAttributes =
-	{
-		value : 1,
-		size : 1,
-		maxLength : 1
+﻿﻿CKEDITOR.dialog.add('ztextfield', function(editor) {
+	var autoAttributes = {
+		value: 1,
+		size: 1,
+		maxLength: 1
 	};
 
-	var acceptedTypes =
-	{
-		text : 1,
-		password : 1
+	var acceptedTypes = {
+		text: 1,
+		password: 1
 	};
 
 	return {
-		title : editor.lang.ztextfield.title,
-		minWidth : 350,
-		minHeight : 150,
-		onShow : function()
-		{
+		title: editor.lang.ztextfield.title,
+		minWidth: 350,
+		minHeight: 150,
+		onShow: function() {
 			delete this.textField;
 
 			var element = this.getParentEditor().getSelection().getSelectedElement();
-			if ( element && element.getName() == "input" &&
-					( acceptedTypes[ element.getAttribute( 'type' ) ] || !element.getAttribute( 'type' ) ) )
-			{
+			if (element && element.getName() == "input" &&
+					(acceptedTypes[element.getAttribute('type')] || !element.getAttribute('type'))
+				) {
 				this.textField = element;
-				this.setupContent( element );
+				this.setupContent(element);
 			}
 		},
-		onOk : function()
-		{
+		onOk: function() {
 			var editor,
 				element = this.textField,
 				isInsertMode = !element;
 
-			if ( isInsertMode )
-			{
+			if (isInsertMode) {
 				editor = this.getParentEditor();
-				element = editor.document.createElement( 'input' );
-				element.setAttribute( 'type', 'text' );
+				element = editor.document.createElement('input');
+				element.setAttribute('type', 'text');
 			}
 
-			if ( isInsertMode )
-				editor.insertElement( element );
-			this.commitContent( { element : element } );
+			if (isInsertMode)
+				editor.insertElement(element);
+			this.commitContent({
+				element: element
+			});
 		},
-		onLoad : function()
-		{
-			var autoSetup = function( element )
-			{
-				var value = element.hasAttribute( this.id ) && element.getAttribute( this.id );
-				this.setValue( value || '' );
+		onLoad: function() {
+			var autoSetup = function(element) {
+				var value = element.hasAttribute(this.id)
+					&& element.getAttribute(this.id);
+				this.setValue(value || '');
 			};
 
-			var autoCommit = function( data )
-			{
+			var autoCommit = function(data) {
 				var element = data.element;
 				var value = this.getValue();
 
-				if ( value )
-					element.setAttribute( this.id, value );
-				else
-					element.removeAttribute( this.id );
+				if (value) {
+					element.setAttribute(this.id, value);
+				} else {
+					element.removeAttribute(this.id);
+				}
 			};
 
-			this.foreach( function( contentObj )
-				{
-					if ( autoAttributes[ contentObj.id ] )
-					{
-						contentObj.setup = autoSetup;
-						contentObj.commit = autoCommit;
-					}
-				} );
+			this.foreach(function(contentObj) {
+				if (autoAttributes[contentObj.id]) {
+					contentObj.setup = autoSetup;
+					contentObj.commit = autoCommit;
+				}
+			});
 		},
-		contents : [
-			{
-				id : 'info',
-				label : editor.lang.ztextfield.title,
-				title : editor.lang.ztextfield.title,
-				elements : [
-					{
-						type : 'hbox',
-						widths : [ '50%', '50%' ],
-						children :
-						[
-							{
-								id : '_cke_saved_name',
-								type : 'text',
-								label : editor.lang.ztextfield.name,
-								'default' : '',
-								accessKey : 'N',
-								setup : function( element )
-								{
-									this.setValue(
-											element.getAttribute( '_cke_saved_name' ) ||
-											element.getAttribute( 'name' ) ||
-											'' );
-								},
-								commit : function( data )
-								{
-									var element = data.element;
+		contents: [
+		    CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.settingTab, [{
+				id: 'type',
+				type: 'select',
+				label: editor.lang.ztextfield.type,
+				'default': 'text',
+				items: [
+					[editor.lang.ztextfield.typeText, 'text'],
+					[editor.lang.ztextfield.typePass, 'password']
+				],
+				setup: function(element) {
+					this.setValue(element.getAttribute('type'));
+				},
+				commit: function(data) {
+					var element = data.element;
 
-									if ( this.getValue() )
-										element.setAttribute( '_cke_saved_name', this.getValue() );
-									else
-									{
-										element.removeAttribute( '_cke_saved_name' );
-										element.removeAttribute( 'name' );
-									}
-								}
-							},
-							{
-								id : 'value',
-								type : 'text',
-								label : editor.lang.ztextfield.value,
-								'default' : '',
-								accessKey : 'V'
-							}
-						]
-					},
-					{
-						type : 'hbox',
-						widths : [ '50%', '50%' ],
-						children :
-						[
-							{
-								id : 'size',
-								type : 'text',
-								label : editor.lang.ztextfield.charWidth,
-								'default' : '',
-								accessKey : 'C',
-								style : 'width:50px',
-								validate : CKEDITOR.dialog.validate.integer( editor.lang.common.validateNumberFailed )
-							},
-							{
-								id : 'maxLength',
-								type : 'text',
-								label : editor.lang.ztextfield.maxChars,
-								'default' : '',
-								accessKey : 'M',
-								style : 'width:50px',
-								validate : CKEDITOR.dialog.validate.integer( editor.lang.common.validateNumberFailed )
-							}
-						],
-						onLoad : function()
-						{
-							// Repaint the style for IE7 (#6068)
-							if ( CKEDITOR.env.ie7Compat )
-								this.getElement().setStyle( 'zoom', '100%' );
+					if (CKEDITOR.env.ie) {
+						//如果是IE，必须重新写入标签
+						var elementType = element.getAttribute( 'type' );
+						var myType = this.getValue();
+
+						if (elementType != myType) {
+							var replace = CKEDITOR.dom.element.createFromHtml(
+									'<input type="' + myType + '"></input>',
+									editor.document);
+							element.copyAttributes(replace, {
+								type: 1
+							});
+							replace.replace(element);
+							editor.getSelection().selectElement(replace);
+							data.element = replace;
 						}
-					},
-					{
-						id : 'type',
-						type : 'select',
-						label : editor.lang.ztextfield.type,
-						'default' : 'text',
-						accessKey : 'M',
-						items :
-						[
-							[ editor.lang.ztextfield.typeText, 'text' ],
-							[ editor.lang.ztextfield.typePass, 'password' ]
-						],
-						setup : function( element )
-						{
-							this.setValue( element.getAttribute( 'type' ) );
-						},
-						commit : function( data )
-						{
-							var element = data.element;
-
-							if ( CKEDITOR.env.ie )
-							{
-								var elementType = element.getAttribute( 'type' );
-								var myType = this.getValue();
-
-								if ( elementType != myType )
-								{
-									var replace = CKEDITOR.dom.element.createFromHtml( '<input type="' + myType + '"></input>', editor.document );
-									element.copyAttributes( replace, { type : 1 } );
-									replace.replace( element );
-									editor.getSelection().selectElement( replace );
-									data.element = replace;
-								}
-							}
-							else
-								element.setAttribute( 'type', this.getValue() );
-						}
+					} else {
+						//如果不是IE，可以直接更改input的type值
+						element.setAttribute('type', this.getValue());
 					}
-				]
-			}
+				}
+			}]),
+			CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.validatorTab, [])
 		]
 	};
 });

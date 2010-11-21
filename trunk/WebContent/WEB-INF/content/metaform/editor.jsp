@@ -12,8 +12,8 @@
 <script type="text/javascript" src="${ctx}/js/metaform/editor.js"></script>
 </head>
 <body>
-<div class="inner-layout">
-<div region="north">
+<div>
+<div>
 	<table width="640" cellspacing="5"><tr>
 		<td valign="top" width="80"><label for="formName"><s:text name="metaform.label.formname"/></td><td valign="top"><input type="text" id="formName" class="filled"/></td>
 	</tr><tr>
@@ -22,8 +22,9 @@
 		<td valign="top" height="60"><label for="remarks"><s:text name="metaform.label.remarks"/></td><td valign="top"><textarea class="filled" id="remarks"></textarea></td>
 	</tr></table>
 </div>
-<div region="center">
+<div>
 	<textarea id="formHtml"></textarea>
+</div>
 </div>
 </div>
 </body>
