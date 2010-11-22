@@ -2,8 +2,11 @@ CKEDITOR.plugins.setLang("zforms", "en", { zforms: {
 	ztextfield: {
 		title: "Text",
 		type: "Type",
+		dataType: "Data type",
 		typeText: "Text",
-		typePass: "Password"
+		typePass: "Password",
+		typeInt: "Integer",
+		typeFloat: "Float"
 	},
 	ztextarea: {
 		title: "Rich text"
