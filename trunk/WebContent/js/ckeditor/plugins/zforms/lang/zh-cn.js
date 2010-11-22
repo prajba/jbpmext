@@ -2,8 +2,11 @@ CKEDITOR.plugins.setLang("zforms", "zh-cn", { zforms: {
 	ztextfield: {
 		title: "文字",
 		type: "类型",
+		dataType: "数据类型",
 		typeText: "文字",
-		typePass: "密码"
+		typePass: "密码",
+		typeInt: "整数",
+		typeFloat: "小数"
 	},
 	ztextarea: {
 		title: "大段文字"

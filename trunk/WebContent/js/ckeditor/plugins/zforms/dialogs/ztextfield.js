@@ -9,9 +9,10 @@
 		text: 1,
 		password: 1
 	};
+	var lang = editor.lang.zforms;
 
 	return {
-		title: editor.lang.ztextfield.title,
+		title: lang.ztextfield.title,
 		minWidth: 350,
 		minHeight: 150,
 		onShow: function() {
@@ -71,11 +72,11 @@
 		    CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.settingTab, [{
 				id: 'type',
 				type: 'select',
-				label: editor.lang.ztextfield.type,
+				label: lang.ztextfield.type,
 				'default': 'text',
 				items: [
-					[editor.lang.ztextfield.typeText, 'text'],
-					[editor.lang.ztextfield.typePass, 'password']
+					[lang.ztextfield.typeText, 'text'],
+					[lang.ztextfield.typePass, 'password']
 				],
 				setup: function(element) {
 					this.setValue(element.getAttribute('type'));
@@ -103,6 +104,22 @@
 						//如果不是IE，可以直接更改input的type值
 						element.setAttribute('type', this.getValue());
 					}
+				}
+			}, {
+				id: "dataType",
+				type: "select",
+				label: lang.ztextfield.dataType,
+				"default": "text",
+				items: [
+					[lang.ztextfield.typeText, "text"],
+					[lang.ztextfield.typeInt, "int"],
+					[lang.ztextfield.typeFloat, "float"]
+				],
+				setup: function(element) {
+					this.setValue(element.getAttribute("datatype"));
+				},
+				commit: function(data) {
+					data.element.setAttribute("datatype", this.getValue());
 				}
 			}]),
 			CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.validatorTab, [])

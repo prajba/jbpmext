@@ -28,7 +28,7 @@ window.editorSaveClicked = function() {
 function initCKEditor() {
 	$("#formHtml").ckeditor({
 		resize_dir: "vertical",
-		height: 600,
+		height: 300,
 		uiColor: '#ddd',
 
 		toolbar: 'TB',
