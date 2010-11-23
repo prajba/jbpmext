@@ -1,4 +1,4 @@
-﻿﻿CKEDITOR.dialog.add('ztextfield', function(editor) {
+﻿CKEDITOR.dialog.add('ztextfield', function(editor) {
 	var autoAttributes = {
 		value: 1,
 		size: 1,
@@ -35,6 +35,7 @@
 				editor = this.getParentEditor();
 				element = editor.document.createElement('input');
 				element.setAttribute('type', 'text');
+				element.setAttribute('display_type', 'text');
 			}
 
 			if (isInsertMode)
@@ -70,58 +71,62 @@
 		},
 		contents: [
 		    CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.settingTab, [{
-				id: 'type',
-				type: 'select',
-				label: lang.ztextfield.type,
-				'default': 'text',
-				items: [
-					[lang.ztextfield.typeText, 'text'],
-					[lang.ztextfield.typePass, 'password']
-				],
-				setup: function(element) {
-					this.setValue(element.getAttribute('type'));
-				},
-				commit: function(data) {
-					var element = data.element;
-
-					if (CKEDITOR.env.ie) {
-						//如果是IE，必须重新写入标签
-						var elementType = element.getAttribute( 'type' );
-						var myType = this.getValue();
-
-						if (elementType != myType) {
-							var replace = CKEDITOR.dom.element.createFromHtml(
-									'<input type="' + myType + '"></input>',
-									editor.document);
-							element.copyAttributes(replace, {
-								type: 1
-							});
-							replace.replace(element);
-							editor.getSelection().selectElement(replace);
-							data.element = replace;
+		    	type: "hbox",
+		    	widths: ["50%", "50%"],
+		    	children: [{
+					id: 'type',
+					type: 'select',
+					label: lang.ztextfield.type,
+					'default': 'text',
+					items: [
+						[lang.ztextfield.typeText, 'text'],
+						[lang.ztextfield.typePass, 'password']
+					],
+					setup: function(element) {
+						this.setValue(element.getAttribute('type'));
+					},
+					commit: function(data) {
+						var element = data.element;
+	
+						if (CKEDITOR.env.ie) {
+							//如果是IE，必须重新写入标签
+							var elementType = element.getAttribute( 'type' );
+							var myType = this.getValue();
+	
+							if (elementType != myType) {
+								var replace = CKEDITOR.dom.element.createFromHtml(
+										'<input type="' + myType + '"></input>',
+										editor.document);
+								element.copyAttributes(replace, {
+									type: 1
+								});
+								replace.replace(element);
+								editor.getSelection().selectElement(replace);
+								data.element = replace;
+							}
+						} else {
+							//如果不是IE，可以直接更改input的type值
+							element.setAttribute('type', this.getValue());
 						}
-					} else {
-						//如果不是IE，可以直接更改input的type值
-						element.setAttribute('type', this.getValue());
 					}
-				}
-			}, {
-				id: "dataType",
-				type: "select",
-				label: lang.ztextfield.dataType,
-				"default": "text",
-				items: [
-					[lang.ztextfield.typeText, "text"],
-					[lang.ztextfield.typeInt, "int"],
-					[lang.ztextfield.typeFloat, "float"]
-				],
-				setup: function(element) {
-					this.setValue(element.getAttribute("datatype"));
-				},
-				commit: function(data) {
-					data.element.setAttribute("datatype", this.getValue());
-				}
-			}]),
+				}, {
+					id: "dataType",
+					type: "select",
+					label: lang.ztextfield.dataType,
+					"default": "text",
+					items: [
+						[lang.ztextfield.typeText, "text"],
+						[lang.ztextfield.typeInt, "int"],
+						[lang.ztextfield.typeFloat, "float"]
+					],
+					setup: function(element) {
+						this.setValue(element.getAttribute("data_type"));
+					},
+					commit: function(data) {
+						data.element.setAttribute("data_type", this.getValue());
+					}
+				}]
+		    }]),
 			CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.validatorTab, [])
 		]
 	};

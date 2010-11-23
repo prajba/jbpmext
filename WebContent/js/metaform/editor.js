@@ -1,9 +1,35 @@
+function generateColumnName() {
+	return "col_" + Math.floor(Math.random() * 100000000);
+}
+
+function getCols(jqobj) {
+	var result = [];
+	jqobj.find(":input").each(function() {
+		var me = $(this);
+		var col = {
+			id: me.attr("col_id"),
+			fieldName: me.attr("field_name"),
+			columnName: me.attr("column_name") || generateColumnName(),
+			inputHint: me.attr("input_hint"),
+			displayType: me.attr("display_type") || "text",
+			dataType: me.attr("data_type") || "text",
+			dictCategory: me.attr("dict_category"),
+			//TODO Resolve multi-line remarks and validators
+			remarks: me.attr("remarks"),
+			validatorXml: me.attr("validator_xml")
+		};
+		result.push(col);
+	});
+	return result;
+}
+
 function formToObject() {
 	var frm = {};
 	frm.formName = $("#formName").val();
 	frm.tableName = $("#tableName").val();
 	frm.remarks = $("#remarks").val();
 	frm.formHtml = $("#formHtml").val();
+	frm.cols = getCols($(frm.formHtml));
 	return frm;
 }
 

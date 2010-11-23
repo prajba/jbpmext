@@ -6,6 +6,7 @@ package org.jbpmext.service.h3;
 import java.util.List;
 
 import org.jbpmext.dao.TermedDAO;
+import org.jbpmext.model.MetaField;
 import org.jbpmext.model.MetaForm;
 import org.jbpmext.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,17 @@ public class FormServiceH3 implements FormService {
 			dao.add(form);
 		} else {
 			dao.update(form);
+		}
+		List<MetaField> flds = form.getFields();
+		if (flds != null && !flds.isEmpty()) {
+			for (MetaField f: flds) {
+				f.setForm(form);
+				if (f.getId() == null) {
+					dao.add(f);
+				} else {
+					dao.update(f);
+				}
+			}
 		}
 	}
 }
