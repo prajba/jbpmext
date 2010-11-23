@@ -13,7 +13,8 @@ CKEDITOR.plugins.setLang("zforms", "en", { zforms: {
 	},
 	labels: {
 		setting: "Settings",
-		name: "Name",
+		columnName: "Database name",
+		fieldName: "Display name",
 		hint: "Hint",
 		validator: "Validator",
 		presetValidator: "Preset",

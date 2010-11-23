@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
+import org.jbpmext.model.MetaField;
 import org.jbpmext.model.MetaForm;
 import org.jbpmext.service.FormService;
 import org.jbpmext.util.ActionJsonUtil;
@@ -60,6 +61,9 @@ public class FormAction extends ActionSupport {
 			logger.debug("Saving meta form: " + form);
 		}
 		try {
+			for (MetaField f: form.getFields()) {
+				f.setForm(form);
+			}
 			service.save(form);
 			ActionJsonUtil.putJson(form);
 		} catch (RuntimeException ex) {

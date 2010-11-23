@@ -74,6 +74,26 @@ CKEDITOR.plugins.add('zforms', {
 			}
 		});
 
+		var textInputDef = function(conf) {
+			return {
+				id: conf.id,
+				type: "text",
+				label: conf.label,
+				"default": conf["default"] || "",
+				setup: function(el) {
+					this.setValue(element.getAttribute(conf.id));
+				},
+				commit: function(d) {
+					var el = d.element || d;
+					var v;
+					if (v = this.getValue()) {
+						el.setAttribute(conf.id, v);
+					} else {
+						el.removeAttribute(conf.id);
+					}
+				}
+			}
+		};
 		//默认属性页
 		CKEDITOR.zforms.settingTab = {
 			id: 'settings',
@@ -82,46 +102,12 @@ CKEDITOR.plugins.add('zforms', {
 			elements: [{
 				type: 'hbox',
 				widths: ['50%', '50%'],
-				children: [{
-					id: '_cke_saved_name',
-					type: 'text',
-					label: lang.labels.name,
-					'default': '',
-					setup: function(element) {
-						this.setValue(
-								element.getAttribute( '_cke_saved_name' ) ||
-								element.getAttribute( 'name' ) ||
-								'');
-					},
-					commit: function(data) {
-						var element = data.element || data;
-
-						if (this.getValue()) {
-							element.setAttribute('_cke_saved_name', this.getValue());
-						} else {
-							element.removeAttribute('_cke_saved_name');
-							element.removeAttribute('name');
-						}
-					}
-				}, {
-					id: 'hint',
-					type: 'text',
-					label: lang.labels.hint,
-					'default': '',
-					setup: function(element) {
-						this.setValue(element.getAttribute("hint"));
-					},
-					commit: function(data) {
-						var val = this.getValue();
-						var el = data.element || data;
-						if (val) {
-							el.setAttribute("hint", val);
-						} else {
-							el.removeAttribute("hint");
-						}
-					}
-				}]
-			}]
+				children: [
+					textInputDef({id: "field_name", label: lang.labels.fieldName}),
+					textInputDef({id: "column_name", label: lang.labels.columnName})
+			]},
+				textInputDef({id: "input_hint", label: lang.labels.hint})
+			]
 		};
 
 		//验证器页

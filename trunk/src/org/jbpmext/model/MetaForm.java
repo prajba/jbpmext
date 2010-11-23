@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -117,7 +118,7 @@ public class MetaForm implements Serializable, Termed {
 		this.version = version;
 	}
 
-	@OneToMany(mappedBy="form")
+	@OneToMany(mappedBy="form", cascade={CascadeType.PERSIST})
 	public List<MetaField> getFields() {
 		return fields;
 	}

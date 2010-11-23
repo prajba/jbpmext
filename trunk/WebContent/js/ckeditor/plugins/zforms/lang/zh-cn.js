@@ -13,7 +13,8 @@ CKEDITOR.plugins.setLang("zforms", "zh-cn", { zforms: {
 	},
 	labels: {
 		setting: "设置",
-		name: "名称",
+		columnName: "数据库列名",
+		fieldName: "显示名",
 		hint: "提示文字",
 		validator: "验证方式",
 		presetValidator: "预置验证器",

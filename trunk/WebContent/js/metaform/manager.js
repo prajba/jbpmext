@@ -4,9 +4,21 @@ function getSelectedForm() {
 	return $("#formlist").datagrid("getSelected");
 }
 
+function colsToPost(frm) {
+	var result = {};
+	for (var i = 0; i < frm.cols.length; i ++) {
+		var c = frm.cols[i];
+		for (var k in c) {
+			if (c.hasOwnProperty(k))
+				result["form.fields[" + i + "]." + k] = c[k];
+		}
+	}
+	return result;
+}
+
 function saveForm(frm) {
 	var isNew = frm.id === undefined;
-	$.post(CONTEXT_ROOT + "/metaform/save.action", {
+	var pdata = $.extend(true, {
 		"form.id": frm.id || "",
 		"form.formName": frm.formName,
 		"form.tableName": frm.tableName,
@@ -17,7 +29,8 @@ function saveForm(frm) {
 		"form.sysPreset": frm.sysPreset,
 		"form.version": frm.version,
 		"form.remarks": frm.remarks
-	}, function(nfrm) {
+	}, colsToPost(frm));
+	$.post(CONTEXT_ROOT + "/metaform/save.action", pdata, function(nfrm) {
 		var fn = isNew ? appendNewForm : updateEditedForm;
 		fn(nfrm);
 		top.closeEditorDialog();

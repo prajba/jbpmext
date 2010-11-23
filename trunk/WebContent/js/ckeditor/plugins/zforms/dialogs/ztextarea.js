@@ -1,4 +1,4 @@
-﻿﻿CKEDITOR.dialog.add( 'ztextarea', function( editor ) {
+﻿CKEDITOR.dialog.add( 'ztextarea', function( editor ) {
 	return {
 		title: editor.lang.textarea.title,
 		minWidth: 350,
