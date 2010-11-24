@@ -47,7 +47,7 @@ public class MetaField implements Serializable, Usable {
 	}
 	
 	@ManyToOne(targetEntity=MetaForm.class)
-	@JoinColumn(name="parent_id")
+	@JoinColumn(name="form_id")
 	public MetaForm getForm() {
 		return form;
 	}

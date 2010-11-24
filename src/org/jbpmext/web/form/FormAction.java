@@ -10,13 +10,15 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
-import org.jbpmext.model.MetaField;
 import org.jbpmext.model.MetaForm;
 import org.jbpmext.service.FormService;
 import org.jbpmext.util.ActionJsonUtil;
-import org.jbpmext.util.EasyUIGridWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -46,7 +48,7 @@ public class FormAction extends ActionSupport {
 		} catch (Exception ex) {
 			logger.error("Loading forms", ex);
 		}
-		ActionJsonUtil.putJson(new EasyUIGridWrapper(forms));
+		ActionJsonUtil.putJson(formsToString(forms));
 		return SUCCESS;
 	}
 	
@@ -61,16 +63,37 @@ public class FormAction extends ActionSupport {
 			logger.debug("Saving meta form: " + form);
 		}
 		try {
-			for (MetaField f: form.getFields()) {
-				f.setForm(form);
-			}
 			service.save(form);
-			ActionJsonUtil.putJson(form);
+			ActionJsonUtil.putJson(formToString(form));
 		} catch (RuntimeException ex) {
 			logger.error("Error saving form: ", ex);
 			throw ex;
 		}
 		return SUCCESS;
+	}
+	
+	private String formsToString(List<MetaForm> forms) {
+		StringBuilder buff = new StringBuilder();
+		for (MetaForm f: forms) {
+			if (buff.length() > 0) buff.append(',');
+			buff.append(formToString(f));
+		}
+		return "{\"total\":" + forms.size() + ",\"rows\":[" + buff + "]}";
+	}
+	
+	private String formToString(MetaForm form) {
+		Gson g = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy(){
+			@Override
+			public boolean shouldSkipClass(Class<?> cls) {
+				return false;
+			}
+
+			@Override
+			public boolean shouldSkipField(FieldAttributes fattr) {
+				return fattr.getName().equals("form");
+			}
+		}).create();
+		return g.toJson(form);
 	}
 
 	public MetaForm getForm() {
