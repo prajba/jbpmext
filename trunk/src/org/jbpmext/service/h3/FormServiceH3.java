@@ -41,6 +41,7 @@ public class FormServiceH3 implements FormService {
 		if (form.getId() == null) {
 			dao.initTermed(form);
 			dao.add(form);
+			//TODO Add form table.
 		} else {
 			dao.update(form);
 		}
@@ -50,6 +51,7 @@ public class FormServiceH3 implements FormService {
 				f.setForm(form);
 				if (f.getId() == null) {
 					dao.add(f);
+					//TODO Add form column.
 				} else {
 					dao.update(f);
 				}
