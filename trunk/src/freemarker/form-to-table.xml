@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class entity-name="TABLE_NAME" table="TABLE_NAME">
+		<id name="id" column="obj_id" type="integer">
+			<generator class="native"></generator>
+		</id>
+		<property name="beginTime" column="begin_time" type="date" not-null="true">
+		</property>
+		<property name="endTime" column="end_time" type="date">
+		</property>
+		<property name="usableStatus" column="usable_status" type="integer" not-null="true">
+		</property>
+		<many-to-one name="draftsman" class="org.jbpmext.model.Member">
+			<column name="draftsman_id"></column>
+		</many-to-one>
+		<many-to-one name="permission" class="org.jbpmext.model.ObjectPermission">
+			<column name="permission_id"></column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>
