@@ -5,14 +5,14 @@ package org.jbpmext.dao.h3;
 
 import java.io.Serializable;
 
-import org.hibernate.SessionFactory;
 import org.jbpmext.dao.TermedFormDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author weiht
  *
  */
+@Component("termedFormDao")
 public class H3TermedFormDAO extends H3TermedDAO implements TermedFormDAO {
 	@Override
 	public Serializable add(String entityName, Object o) {

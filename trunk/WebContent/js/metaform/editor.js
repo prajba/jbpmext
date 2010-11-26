@@ -79,7 +79,6 @@ function initCKEditor() {
 
 $(function() {
 	doEditorLayout("#editor");
-	//$(".inner-layout").addClass("filled").layout();
 	initCKEditor();
 	initFormEditor();
 });

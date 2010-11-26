@@ -45,7 +45,7 @@
 	<!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
 
 	<!-- Hibernate配置 -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	<bean id="sessionFactory" class="org.jbpmext.service.h3.AnnotationSessionFactory">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 
 		<property name="namingStrategy">
