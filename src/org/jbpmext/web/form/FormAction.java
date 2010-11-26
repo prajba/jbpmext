@@ -12,6 +12,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.jbpmext.model.MetaForm;
 import org.jbpmext.service.FormService;
+import org.jbpmext.service.FormTableService;
 import org.jbpmext.util.ActionJsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +31,9 @@ import com.opensymphony.xwork2.ActionSupport;
 public class FormAction extends ActionSupport {
 	private static final Logger logger = LogManager.getLogger(FormAction.class);
 	@Autowired
-	private FormService service;
+	private FormService formService;
+	@Autowired
+	private FormTableService tableService;
 	
 	private List<MetaForm> forms;
 	private MetaForm form;
@@ -44,7 +47,7 @@ public class FormAction extends ActionSupport {
 	@Action(value="list", results={@Result(name="success", location="/common/json.jsp")})
 	public String list() throws Exception {
 		try {
-			forms = service.findAllForms();
+			forms = formService.findAllForms();
 		} catch (Exception ex) {
 			logger.error("Loading forms", ex);
 		}
@@ -63,7 +66,8 @@ public class FormAction extends ActionSupport {
 			logger.debug("Saving meta form: " + form);
 		}
 		try {
-			service.save(form);
+			formService.save(form);
+			tableService.saveFormTable(form);
 			ActionJsonUtil.putJson(formToString(form));
 		} catch (RuntimeException ex) {
 			logger.error("Error saving form: ", ex);

@@ -18,7 +18,7 @@
 		<many-to-one name="permission" class="org.jbpmext.model.ObjectPermission">
 			<column name="permission_id"></column>
 		</many-to-one>
-<#list columns as col>
+<#list fields as col>
 		<property name="${col.fieldName}" type="${col.dataType}">
 			<column name="${col.columnName}"<#if col.dataType == "string"> length="200"</#if>></column>
 		</property>
