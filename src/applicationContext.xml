@@ -23,20 +23,13 @@
 	<context:component-scan base-package="org.jbpmext" />
 
 	<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<!-- Connection Info -->
-		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-
-		<!-- Connection Pooling Info -->
-		<property name="initialSize" value="${dbcp.initialSize}" />
-		<property name="maxActive" value="${dbcp.maxActive}" />
-		<property name="maxIdle" value="${dbcp.maxIdle}" />
-		<property name="defaultAutoCommit" value="false" />
+	<bean id="dataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"
+			value="java:comp/env/jdbc/jbpmextDS"/>
+		<property name="resourceRef"
+			value="true" />
 	</bean>
-	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
          <property name="dataSource" ref="dataSource"></property>
      </bean>

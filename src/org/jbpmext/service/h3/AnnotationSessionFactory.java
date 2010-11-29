@@ -3,12 +3,13 @@
  */
 package org.jbpmext.service.h3;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.sql.DataSource;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 
 /**
@@ -16,24 +17,38 @@ import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBea
  *
  */
 public class AnnotationSessionFactory extends AnnotationSessionFactoryBean {
-	private List<String> oldMappingResources = new ArrayList<String>();
+	@Autowired
+	private SessionFactory factoryWrapper;
+	@Autowired
+	private SessionFactoryConfig conf;
+	
+	private static DataSource sharedDataSource;
+	
+	public static DataSource getSharedDataSource() {
+		return sharedDataSource;
+	}
 	
 	@Override
-	public void setMappingResources(String[] mappingResources) {
-		mergeResources(mappingResources);
-		super.setMappingResources(oldMappingResources.toArray(new String[oldMappingResources.size()]));
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+		getConfiguration().setProperty(Environment.CONNECTION_PROVIDER,
+				SharedConnectionProvider.class.getCanonicalName());
 	}
 
-	private void mergeResources(String[] mappingResources) {
-		for (String r: mappingResources) {
-			if (r != null && oldMappingResources.indexOf(r) < 0)
-				oldMappingResources.add(r);
-		}
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		sharedDataSource = dataSource;
+		super.setDataSource(dataSource);
+	}
+	
+	@Autowired
+	public void setFactoryWrapper(SessionFactoryWrapper factoryWrapper) {
+		this.factoryWrapper = factoryWrapper;
 	}
 
 	@Override
 	protected SessionFactory newSessionFactory(Configuration config)
 			throws HibernateException {
-		return new SessionFactoryWrapper(config);
+		return factoryWrapper;
 	}
 }
