@@ -12,6 +12,7 @@ import org.jbpmext.dao.TermedDAO;
 import org.jbpmext.model.Termed;
 import org.jbpmext.model.UsableStatuses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
 
@@ -75,6 +76,7 @@ public class H3TermedDAO extends HibernateDaoSupport implements TermedDAO {
 	}
 	
 	@Autowired
+	@Qualifier("sessionFactory")
 	public void setFactory(SessionFactory factory) {
 		super.setSessionFactory(factory);
 	}
