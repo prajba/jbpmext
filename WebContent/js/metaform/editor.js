@@ -2,12 +2,22 @@ function generateColumnName() {
 	return "col_" + Math.floor(Math.random() * 100000000);
 }
 
+function getColId(fldName) {
+	if (!window.editingForms.cols) return null;
+	for (var i = 0; i < window.editingForms.cols.length; i ++) {
+		var c = window.editingForms.cols[i];
+		if (c["field_name"] === fldName)
+			return c["id"];
+	}
+	return "";
+}
+
 function getCols(jqobj) {
 	var result = [];
 	jqobj.find(":input").each(function() {
 		var me = $(this);
 		var col = {
-			id: me.attr("col_id"),
+			id: me.attr("col_id") || getColId(me.attr("field_name")),
 			fieldName: me.attr("field_name"),
 			columnName: me.attr("column_name") || generateColumnName(),
 			inputHint: me.attr("input_hint"),

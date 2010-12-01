@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -50,7 +52,7 @@ public class FormServiceH3 implements FormService {
 	private void initFormTables() {
 		List<MetaForm> forms = findAllForms();
 		try {
-			List<String> xmls;
+			Map<MetaForm, String> xmls;
 			xmls = formsToMappingStrings(forms);
 			factoryConfig.addXmls(xmls);
 		} catch (Exception e) {
@@ -59,11 +61,11 @@ public class FormServiceH3 implements FormService {
 		}
 	}
 
-	private List<String> formsToMappingStrings(List<MetaForm> forms) throws IOException, TemplateException {
+	private Map<MetaForm, String> formsToMappingStrings(List<MetaForm> forms) throws IOException, TemplateException {
 		Template temp = initMappingTemplate();
-		List<String> result = new ArrayList<String>(forms.size());
+		Map<MetaForm, String> result = new HashMap<MetaForm, String>(forms.size());
 		for (MetaForm f: forms) {
-			result.add(formToMappingString(f, temp));
+			result.put(f, formToMappingString(f, temp));
 		}
 		return result;
 	}
@@ -72,7 +74,7 @@ public class FormServiceH3 implements FormService {
 		try {
 			Template temp = initMappingTemplate();
 			String s = formToMappingString(form, temp);
-			factoryConfig.addXml(s);
+			factoryConfig.addXml(form, s);
 		} catch (Exception ex) {
 			logger.error("Saving form mapping xml file:", ex);
 			throw new HibernateException("Error saving table structure.", ex);
