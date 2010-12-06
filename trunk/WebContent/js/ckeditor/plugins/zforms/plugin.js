@@ -37,7 +37,9 @@ CKEDITOR.plugins.add('zforms', {
 	
 		var dialogPath = this.path + 'dialogs/';
 		addButtonCommand('zTextField', 'ztextfield', 
-			dialogPath + 'ztextfield.js');
+				dialogPath + 'ztextfield.js');
+		addButtonCommand('zSelect', 'zselect', 
+				dialogPath + 'zselect.js');
 		addButtonCommand('zTextarea', 'ztextarea',
 			dialogPath + 'ztextarea.js');
 		
