@@ -8,6 +8,9 @@ CKEDITOR.plugins.setLang("zforms", "zh-cn", { zforms: {
 		typeInt: "整数",
 		typeFloat: "小数"
 	},
+	zselect: {
+		title: "选择"
+	},
 	ztextarea: {
 		title: "大段文字"
 	},
@@ -21,6 +24,7 @@ CKEDITOR.plugins.setLang("zforms", "zh-cn", { zforms: {
 		customValidator: "自定义验证器",
 		validatorScript: "验证脚本",
 		ztextfield: "文字",
+		zselect: "选择",
 		ztextarea: "大段文字"
 	}
 }});

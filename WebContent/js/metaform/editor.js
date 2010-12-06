@@ -79,7 +79,7 @@ function initCKEditor() {
 			['TextColor','BGColor'],
 			['NumberedList','BulletedList'],
 			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-			['zTextField', 'zTextarea']
+			['zTextField', 'zSelect', 'zTextarea']
 		],
 
 		fontSize_sizes: '10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;22/22px;24/24px;28/28px;32/32px;48/48px;',

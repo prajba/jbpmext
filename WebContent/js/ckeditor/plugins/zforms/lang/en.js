@@ -8,6 +8,9 @@ CKEDITOR.plugins.setLang("zforms", "en", { zforms: {
 		typeInt: "Integer",
 		typeFloat: "Float"
 	},
+	zselect: {
+		title: "Select"
+	},
 	ztextarea: {
 		title: "Rich text"
 	},
@@ -21,6 +24,7 @@ CKEDITOR.plugins.setLang("zforms", "en", { zforms: {
 		customValidator: "Custom",
 		validatorScript: "Script",
 		ztextfield: "Text",
+		zselect: "Select",
 		ztextarea: "Rich text"
 	}
 }});
