@@ -19,6 +19,7 @@ import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBea
 public class AnnotationSessionFactory extends AnnotationSessionFactoryBean {
 	@Autowired
 	private SessionFactory factoryWrapper;
+	@SuppressWarnings("unused")
 	@Autowired
 	private SessionFactoryConfig conf;
 	

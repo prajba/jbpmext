@@ -82,8 +82,10 @@ CKEDITOR.plugins.add('zforms', {
 				type: "text",
 				label: conf.label,
 				"default": conf["default"] || "",
-				setup: function(el) {
-					this.setValue(element.getAttribute(conf.id));
+				setup: function(el, extel) {
+					this.setValue(el.getAttribute && el.getAttribute(conf.id)
+							|| extel && extel.getAttribute && extel.getAttribute(conf.id)
+							|| "");
 				},
 				commit: function(d) {
 					var el = d.element || d;

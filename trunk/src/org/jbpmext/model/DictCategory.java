@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -22,8 +24,10 @@ public class DictCategory implements Serializable {
 	private String displayName;
 	private String valueType;
 	private String tableName;
+	private String remarks;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="category_id", nullable=false, unique=true, updatable=false)
 	public Integer getId() {
 		return id;
@@ -54,5 +58,13 @@ public class DictCategory implements Serializable {
 	}
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+
+	@Column(name="remarks", length=200)
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 }

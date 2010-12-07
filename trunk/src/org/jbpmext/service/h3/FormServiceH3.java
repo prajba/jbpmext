@@ -6,7 +6,6 @@ package org.jbpmext.service.h3;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class FormServiceH3 implements FormService {
 		try {
 			Map<MetaForm, String> xmls;
 			xmls = formsToMappingStrings(forms);
-			factoryConfig.addXmls(xmls);
+			factoryConfig.addFormMappingXmls(xmls);
 		} catch (Exception e) {
 			logger.error("Initializing forms:", e);
 			throw new HibernateException("Error initializing forms.", e);
@@ -74,7 +73,7 @@ public class FormServiceH3 implements FormService {
 		try {
 			Template temp = initMappingTemplate();
 			String s = formToMappingString(form, temp);
-			factoryConfig.addXml(form, s);
+			factoryConfig.addFormMappingXml(form, s);
 		} catch (Exception ex) {
 			logger.error("Saving form mapping xml file:", ex);
 			throw new HibernateException("Error saving table structure.", ex);

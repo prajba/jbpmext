@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class entity-name="${formName}" table="${tableName}">
+	<class entity-name="${formName}" table="c_${tableName}">
 		<id name="id" column="obj_id" type="integer">
 			<generator class="native"></generator>
 		</id>
