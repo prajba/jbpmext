@@ -15,6 +15,7 @@ function initEditor() {
 	$("#remarks").val(window.editing.remarks);
 	if (window.editing.id !== undefined) {
 		//Disable fields that are not editable.
+		$("#displayName").replaceWith("" + $("#displayName").val());
 		$("#valueType").replaceWith("" + function(sel) {
 			return sel.options[sel.selectedIndex].text;
 		} ($("#valueType").get(0)));

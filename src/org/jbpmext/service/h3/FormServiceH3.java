@@ -6,6 +6,7 @@ package org.jbpmext.service.h3;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,9 @@ public class FormServiceH3 implements FormService {
 	private String formToMappingString(MetaForm form, Template temp)
 			throws IOException, TemplateException {
 		StringWriter w = new StringWriter();
+		if (form.getFields() == null) {
+			form.setFields(new ArrayList<MetaField>());
+		}
 		temp.process(form, w);
 		String s = w.toString();
 		logger.debug(w);

@@ -72,6 +72,7 @@ public class DictionaryAction extends ActionSupport {
 	
 	@Action(value="catManager", results={@Result(name="success", location="/WEB-INF/content/dict/catManager.jsp")})
 	public String catManager() throws Exception {
+		logger.debug(cat);
 		return SUCCESS;
 	}
 	
@@ -79,6 +80,7 @@ public class DictionaryAction extends ActionSupport {
 	@SuppressWarnings("rawtypes")
 	public String listEntries() throws Exception {
 		List entries;
+		logger.debug(cat);
 		try {
 			entries = service.listEntries(cat.getId());
 		} catch (Exception ex) {

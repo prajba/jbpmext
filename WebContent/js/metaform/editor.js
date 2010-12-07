@@ -3,7 +3,7 @@ function generateColumnName() {
 }
 
 function getColId(fldName) {
-	if (!window.editingForms.cols) return null;
+	if (!window.editingForm.cols) return null;
 	for (var i = 0; i < window.editingForms.cols.length; i ++) {
 		var c = window.editingForms.cols[i];
 		if (c["field_name"] === fldName)
@@ -17,7 +17,7 @@ function getCols(jqobj) {
 	jqobj.find(":input").each(function() {
 		var me = $(this);
 		var col = {
-			id: me.attr("col_id") || getColId(me.attr("field_name")),
+			id: me.attr("col_id") || getColId(me.attr("field_name")) || "",
 			fieldName: me.attr("field_name"),
 			columnName: me.attr("column_name") || generateColumnName(),
 			inputHint: me.attr("input_hint"),
@@ -50,9 +50,18 @@ function objectToForm(frm) {
 	$("#formHtml").val(frm.formHtml);
 }
 
+function disableNoneditables() {
+	$("#formName").replaceWith($("#formName").val());
+	$("#tableName").replaceWith($("#tableName").val());
+}
+
 function initFormEditor() {
 	window.editingForm = opener.__editorOpener.editingForm || {};
 	objectToForm(window.editingForm);
+	var id = window.editingForm.id;
+	if (id !== undefined) {
+		disableNoneditables();
+	}
 }
 
 window.editorSaveClicked = function() {

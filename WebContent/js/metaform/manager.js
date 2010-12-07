@@ -10,7 +10,7 @@ function colsToPost(frm) {
 		var c = frm.cols[i];
 		for (var k in c) {
 			if (c.hasOwnProperty(k))
-				result["form.fields[" + i + "]." + k] = c[k];
+				result["form.fields[" + i + "]." + k] = c[k] || "";
 		}
 	}
 	return result;

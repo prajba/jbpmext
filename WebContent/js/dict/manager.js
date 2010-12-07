@@ -26,8 +26,11 @@ function manHandler() {
 	if (!cat) {
 		showAlert(top.title, msgs.noneSelected);
 	} else {
-		location.href = CONTEXT_ROOT + "/dict/catManager.action?catId=" + cat.id
-			+ "&catName=" + cat.displayName;
+		$("<form method='post' action='" + CONTEXT_ROOT + "/dict/catManager.action'>"
+				+ "<input name='cat.id' value='" + cat.id
+				+ "'/><input name='cat.displayName' value='" + cat.displayName
+				+ "'/><input name='cat.valueType' value='" + cat.valueType
+				+ "'/></form>").submit();
 	}
 }
 

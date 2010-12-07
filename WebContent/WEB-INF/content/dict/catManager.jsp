@@ -6,13 +6,14 @@
 <%@ include file="/common/styles.jsp" %>
 <%@ include file="/common/scripts.jsp" %>
 <script type="text/javascript" src="${ctx}/js/dict/messages.js"></script>
-<script type="text/javascript" src="${ctx}/js/dict/manager.js"></script>
+<script type="text/javascript" src="${ctx}/js/dict/catManager.js"></script>
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/dict.css"/>
 </head>
 <body>
 <div>
-<span class="hidden" id="catId">$requestScope.catId</span>
-<span class="hidden" id="catName">$requestScope.catName</span>
+<span class="hidden" id="catId"><s:property value="cat.id"/></span>
+<span class="hidden" id="catName"><s:property value="cat.displayName"/></span>
+<span class="hidden" id="valType"><s:property value="cat.valueType"/></span>
 <div id="entrylist">
 </div>
 </div>
