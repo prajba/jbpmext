@@ -13,6 +13,7 @@ public class DictEntry {
 	private String key;
 	private Integer intValue;
 	private String stringValue;
+	private Object value;
 	
 	public Integer getId() {
 		return id;
@@ -40,6 +41,7 @@ public class DictEntry {
 	}
 	public void setIntValue(Integer intValue) {
 		this.intValue = intValue;
+		this.value = intValue;
 	}
 	
 	public String getStringValue() {
@@ -47,5 +49,23 @@ public class DictEntry {
 	}
 	public void setStringValue(String stringValue) {
 		this.stringValue = stringValue;
+		this.value = stringValue;
+	}
+	
+	public Object getValue() {
+		return value;
+	}
+	public void setValue(Object value) {
+		this.value = value;
+		if (value != null) {
+			stringValue = value.toString();
+			try {
+				intValue = Integer.valueOf(stringValue);
+			} catch (NumberFormatException ex) {
+			}
+		} else {
+			stringValue = null;
+			intValue = null;
+		}
 	}
 }

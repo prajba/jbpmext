@@ -26,7 +26,12 @@ var dictMessages = {
 		toolbar: {
 			addEntry: "Add",
 			editEntry: "Edit",
-			delEntry: "Delete"
+			delEntry: "Delete",
+			backToDict: "Category manager"
+		},
+		msgs: {
+			noneSelected: "You must select an entry first.",
+			confirmDelete: "Are you sure to delete it?"
 		}
 	}
 };

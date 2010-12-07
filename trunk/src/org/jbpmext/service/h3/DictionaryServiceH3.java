@@ -149,6 +149,7 @@ public class DictionaryServiceH3 implements DictionaryService {
 			dictDao.add(name, m);
 			entry.setId((Integer)m.get("id"));
 		} else {
+			m.put("id", id);
 			dictDao.update(name, m);
 		}
 	}

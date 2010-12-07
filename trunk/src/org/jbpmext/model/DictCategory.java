@@ -67,4 +67,14 @@ public class DictCategory implements Serializable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	
+	@Override
+	public String toString() {
+		return "{\n\tid:" + id
+			+ ",\n\tdisplayName:" + displayName
+			+ ",\n\tvalueType:" + valueType
+			+ ",\n\ttableName:" + tableName
+			+ ",\n\tremarks:" + remarks
+			+ "\n}";
+	}
 }

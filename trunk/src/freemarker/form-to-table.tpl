@@ -20,7 +20,7 @@
 		</many-to-one>
 <#list fields as col>
 		<property name="${col.fieldName}" type="${col.dataType}">
-			<column name="${col.columnName}"<#if col.dataType == "string"> length="200"</#if>></column>
+			<column name="c_${col.columnName}"<#if col.dataType == "string"> length="200"</#if>></column>
 		</property>
 </#list>
 	</class>

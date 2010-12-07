@@ -38,7 +38,7 @@ public class MetaField implements Serializable, Usable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="field_id", nullable=false, unique=true, updatable=false)
+	@Column(name="field_id", nullable=false, unique=true)
 	public Integer getId() {
 		return id;
 	}
