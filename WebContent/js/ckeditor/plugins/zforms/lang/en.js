@@ -9,7 +9,13 @@ CKEDITOR.plugins.setLang("zforms", "en", { zforms: {
 		typeFloat: "Float"
 	},
 	zselect: {
-		title: "Select"
+		title: "Select",
+		dict: "Dictionary",
+		newDict: "Create",
+		displayType: "Display as",
+		dispTypeList: "Dropdown list",
+		dispTypeRow: "Line up",
+		multiSel: "Multiple select"
 	},
 	ztextarea: {
 		title: "Rich text"

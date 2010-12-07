@@ -9,7 +9,13 @@ CKEDITOR.plugins.setLang("zforms", "zh-cn", { zforms: {
 		typeFloat: "小数"
 	},
 	zselect: {
-		title: "选择"
+		title: "选择",
+		dict: "字典",
+		newDict: "新建字典",
+		displayType: "显示为",
+		dispTypeList: "列表",
+		dispTypeRow: "铺开",
+		multiSel: "允许多选"
 	},
 	ztextarea: {
 		title: "大段文字"

@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
+import org.jbpmext.model.DictCategory;
 import org.jbpmext.model.MetaField;
 import org.jbpmext.model.MetaForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +58,12 @@ public class SessionFactoryConfig {
 		factory = bean.getConfiguration().buildSessionFactory();
 	}
 	
-	public void addXml(MetaForm form, String xml) {
-		doAddXml(form, xml);
+	public void addFormMappingXml(MetaForm form, String xml) {
+		doAddFormMappingXml(form, xml);
 		rebuildFactory();
 	}
 
-	private void doAddXml(MetaForm form, String xml) {
+	private void doAddFormMappingXml(MetaForm form, String xml) {
 		PersistentClass m = bean.getConfiguration().getClassMapping(form.getFormName());
 		if (m == null) {
 			if (logger.isDebugEnabled())
@@ -95,9 +96,30 @@ public class SessionFactoryConfig {
 		return false;
 	}
 
-	public void addXmls(Map<MetaForm, String> xmls) {
+	public void addFormMappingXmls(Map<MetaForm, String> xmls) {
 		for (Entry<MetaForm, String> xml: xmls.entrySet()) {
-			doAddXml(xml.getKey(), xml.getValue());
+			doAddFormMappingXml(xml.getKey(), xml.getValue());
+		}
+		rebuildFactory();
+	}
+	
+	public void addDictCatMappingXml(DictCategory cat, String xml) {
+		doAddDictCatMappingXml(cat, xml);
+		rebuildFactory();
+	}
+
+	private void doAddDictCatMappingXml(DictCategory cat, String xml) {
+		PersistentClass m = bean.getConfiguration().getClassMapping(cat.getDisplayName());
+		if (m == null) {
+			if (logger.isDebugEnabled())
+				logger.debug("Add xml mapping: mapping named [" + cat.getDisplayName() + "] not found.");
+			bean.getConfiguration().addXML(xml);
+		}
+	}
+	
+	public void addDictCatMappingXmls(Map<DictCategory, String> xmls) {
+		for (Entry<DictCategory, String> xml: xmls.entrySet()) {
+			doAddDictCatMappingXml(xml.getKey(), xml.getValue());
 		}
 		rebuildFactory();
 	}

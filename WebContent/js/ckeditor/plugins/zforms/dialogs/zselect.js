@@ -170,384 +170,74 @@
 				}
 			}
 		},
-		contents : [
-			{
-				id : 'info',
-				label : editor.lang.select.selectInfo,
-				title : editor.lang.select.selectInfo,
-				accessKey : '',
-				elements : [
-					{
-						id : 'txtName',
-						type : 'text',
-						widths : [ '25%','75%' ],
-						labelLayout : 'horizontal',
-						label : editor.lang.common.name,
-						'default' : '',
-						accessKey : 'N',
-						align : 'center',
-						style : 'width:350px',
-						setup : function( name, element )
-						{
-							if ( name == 'clear' )
-								this.setValue( '' );
-							else if ( name == 'select' )
-							{
-								this.setValue(
-										element.getAttribute( '_cke_saved_name' ) ||
-										element.getAttribute( 'name' ) ||
-										'' );
-							}
-						},
-						commit : function( element )
-						{
-							if ( this.getValue() )
-								element.setAttribute( '_cke_saved_name', this.getValue() );
-							else
-							{
-								element.removeAttribute( '_cke_saved_name' ) ;
-								element.removeAttribute( 'name' );
-							}
-						}
-					},
-					{
-						id : 'txtValue',
-						type : 'text',
-						widths : [ '25%','75%' ],
-						labelLayout : 'horizontal',
-						label : editor.lang.select.value,
-						style : 'width:350px',
-						'default' : '',
-						className : 'cke_disabled',
-						onLoad : function()
-						{
-							this.getInputElement().setAttribute( 'readOnly', true );
-						},
-						setup : function( name, element )
-						{
-							if ( name == 'clear' )
-								this.setValue( '' );
-							else if ( name == 'option' && element.getAttribute( 'selected' ) )
-								this.setValue( element.$.value );
-						}
-					},
-					{
-						type : 'hbox',
-						widths : [ '175px', '170px' ],
-						align : 'center',
-						children :
-						[
-							{
-								id : 'txtSize',
-								type : 'text',
-								align : 'center',
-								labelLayout : 'horizontal',
-								label : editor.lang.select.size,
-								'default' : '',
-								accessKey : 'S',
-								style : 'width:175px',
-								validate: function()
-								{
-									var func = CKEDITOR.dialog.validate.integer( editor.lang.common.validateNumberFailed );
-									return ( ( this.getValue() === '' ) || func.apply( this ) );
-								},
-								setup : function( name, element )
-								{
-									if ( name == 'select' )
-										this.setValue( element.getAttribute( 'size' ) || '' );
-									if ( CKEDITOR.env.webkit )
-										this.getInputElement().setStyle( 'width', '86px' );
-								},
-								commit : function( element )
-								{
-									if ( this.getValue() )
-										element.setAttribute( 'size', this.getValue() );
-									else
-										element.removeAttribute( 'size' );
-								}
-							},
-							{
-								type : 'html',
-								html : '<span>' + CKEDITOR.tools.htmlEncode( editor.lang.select.lines ) + '</span>'
-							}
-						]
-					},
-					{
-						type : 'html',
-						html : '<span>' + CKEDITOR.tools.htmlEncode( editor.lang.select.opAvail ) + '</span>'
-					},
-					{
-						type : 'hbox',
-						widths : [ '115px', '115px' ,'100px' ],
-						align : 'top',
-						children :
-						[
-							{
-								type : 'vbox',
-								children :
-								[
-									{
-										id : 'txtOptName',
-										type : 'text',
-										label : editor.lang.select.opText,
-										style : 'width:115px',
-										setup : function( name, element )
-										{
-											if ( name == 'clear' )
-												this.setValue( "" );
-										}
-									},
-									{
-										type : 'select',
-										id : 'cmbName',
-										label : '',
-										title : '',
-										size : 5,
-										style : 'width:115px;height:75px',
-										items : [],
-										onChange : function()
-										{
-											var dialog = this.getDialog(),
-												values = dialog.getContentElement( 'info', 'cmbValue' ),
-												optName = dialog.getContentElement( 'info', 'txtOptName' ),
-												optValue = dialog.getContentElement( 'info', 'txtOptValue' ),
-												iIndex = getSelectedIndex( this );
-
-											setSelectedIndex( values, iIndex );
-											optName.setValue( this.getValue() );
-											optValue.setValue( values.getValue() );
-										},
-										setup : function( name, element )
-										{
-											if ( name == 'clear' )
-												removeAllOptions( this );
-											else if ( name == 'option' )
-												addOption( this, element.getText(), element.getText(),
-													this.getDialog().getParentEditor().document );
-										},
-										commit : function( element )
-										{
-											var dialog = this.getDialog(),
-												optionsNames = getOptions( this ),
-												optionsValues = getOptions( dialog.getContentElement( 'info', 'cmbValue' ) ),
-												selectValue = dialog.getContentElement( 'info', 'txtValue' ).getValue();
-
-											removeAllOptions( element );
-
-											for ( var i = 0 ; i < optionsNames.count() ; i++ )
-											{
-												var oOption = addOption( element, optionsNames.getItem( i ).getValue(),
-													optionsValues.getItem( i ).getValue(), dialog.getParentEditor().document );
-												if ( optionsValues.getItem( i ).getValue() == selectValue )
-												{
-													oOption.setAttribute( 'selected', 'selected' );
-													oOption.selected = true;
-												}
-											}
-										}
-									}
-								]
-							},
-							{
-								type : 'vbox',
-								children :
-								[
-									{
-										id : 'txtOptValue',
-										type : 'text',
-										label : editor.lang.select.opValue,
-										style : 'width:115px',
-										setup : function( name, element )
-										{
-											if ( name == 'clear' )
-												this.setValue( "" );
-										}
-									},
-									{
-										type : 'select',
-										id : 'cmbValue',
-										label : '',
-										size : 5,
-										style : 'width:115px;height:75px',
-										items : [],
-										onChange : function()
-										{
-											var dialog = this.getDialog(),
-												names = dialog.getContentElement( 'info', 'cmbName' ),
-												optName = dialog.getContentElement( 'info', 'txtOptName' ),
-												optValue = dialog.getContentElement( 'info', 'txtOptValue' ),
-												iIndex = getSelectedIndex( this );
-
-											setSelectedIndex( names, iIndex );
-											optName.setValue( names.getValue() );
-											optValue.setValue( this.getValue() );
-										},
-										setup : function( name, element )
-										{
-											if ( name == 'clear' )
-												removeAllOptions( this );
-											else if ( name == 'option' )
-											{
-												var oValue	= element.getValue();
-												addOption( this, oValue, oValue,
-													this.getDialog().getParentEditor().document );
-												if ( element.getAttribute( 'selected' ) == 'selected' )
-													this.getDialog().getContentElement( 'info', 'txtValue' ).setValue( oValue );
-											}
-										}
-									}
-								]
-							},
-							{
-								type : 'vbox',
-								padding : 5,
-								children :
-								[
-									{
-										type : 'button',
-										style : '',
-										label : editor.lang.select.btnAdd,
-										title : editor.lang.select.btnAdd,
-										style : 'width:100%;',
-										onClick : function()
-										{
-											//Add new option.
-											var dialog = this.getDialog(),
-												parentEditor = dialog.getParentEditor(),
-												optName = dialog.getContentElement( 'info', 'txtOptName' ),
-												optValue = dialog.getContentElement( 'info', 'txtOptValue' ),
-												names = dialog.getContentElement( 'info', 'cmbName' ),
-												values = dialog.getContentElement( 'info', 'cmbValue' );
-
-											addOption(names, optName.getValue(), optName.getValue(), dialog.getParentEditor().document );
-											addOption(values, optValue.getValue(), optValue.getValue(), dialog.getParentEditor().document );
-
-											optName.setValue( "" );
-											optValue.setValue( "" );
-										}
-									},
-									{
-										type : 'button',
-										label : editor.lang.select.btnModify,
-										title : editor.lang.select.btnModify,
-										style : 'width:100%;',
-										onClick : function()
-										{
-											//Modify selected option.
-											var dialog = this.getDialog(),
-												optName = dialog.getContentElement( 'info', 'txtOptName' ),
-												optValue = dialog.getContentElement( 'info', 'txtOptValue' ),
-												names = dialog.getContentElement( 'info', 'cmbName' ),
-												values = dialog.getContentElement( 'info', 'cmbValue' ),
-												iIndex = getSelectedIndex( names );
-
-											if ( iIndex >= 0 )
-											{
-												modifyOption( names, iIndex, optName.getValue(), optName.getValue() );
-												modifyOption( values, iIndex, optValue.getValue(), optValue.getValue() );
-											}
-										}
-									},
-									{
-										type : 'button',
-										style : 'width:100%;',
-										label : editor.lang.select.btnUp,
-										title : editor.lang.select.btnUp,
-										onClick : function()
-										{
-											//Move up.
-											var dialog = this.getDialog(),
-												names = dialog.getContentElement( 'info', 'cmbName' ),
-												values = dialog.getContentElement( 'info', 'cmbValue' );
-
-											changeOptionPosition( names, -1, dialog.getParentEditor().document );
-											changeOptionPosition( values, -1, dialog.getParentEditor().document );
-										}
-									},
-									{
-										type : 'button',
-										style : 'width:100%;',
-										label : editor.lang.select.btnDown,
-										title : editor.lang.select.btnDown,
-										onClick : function()
-										{
-											//Move down.
-											var dialog = this.getDialog(),
-												names = dialog.getContentElement( 'info', 'cmbName' ),
-												values = dialog.getContentElement( 'info', 'cmbValue' );
-
-											changeOptionPosition( names, 1, dialog.getParentEditor().document );
-											changeOptionPosition( values, 1, dialog.getParentEditor().document );
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						type : 'hbox',
-						widths : [ '40%', '20%', '40%' ],
-						children :
-						[
-							{
-								type : 'button',
-								label : editor.lang.select.btnSetValue,
-								title : editor.lang.select.btnSetValue,
-								onClick : function()
-								{
-									//Set as default value.
-									var dialog = this.getDialog(),
-										values = dialog.getContentElement( 'info', 'cmbValue' ),
-										txtValue = dialog.getContentElement( 'info', 'txtValue' );
-									txtValue.setValue( values.getValue() );
-								}
-							},
-							{
-								type : 'button',
-								label : editor.lang.select.btnDelete,
-								title : editor.lang.select.btnDelete,
-								onClick : function()
-								{
-									// Delete option.
-									var dialog = this.getDialog(),
-										names = dialog.getContentElement( 'info', 'cmbName' ),
-										values = dialog.getContentElement( 'info', 'cmbValue' ),
-										optName = dialog.getContentElement( 'info', 'txtOptName' ),
-										optValue = dialog.getContentElement( 'info', 'txtOptValue' );
-
-									removeSelectedOptions( names );
-									removeSelectedOptions( values );
-
-									optName.setValue( "" );
-									optValue.setValue( "" );
-								}
-							},
-							{
-								id : 'chkMulti',
-								type : 'checkbox',
-								label : editor.lang.select.chkMulti,
-								'default' : '',
-								accessKey : 'M',
-								value : "checked",
-								setup : function( name, element )
-								{
-									if ( name == 'select' )
-										this.setValue( element.getAttribute( 'multiple' ) );
-									if ( CKEDITOR.env.webkit )
-										this.getElement().getParent().setStyle( 'vertical-align', 'middle' );
-								},
-								commit : function( element )
-								{
-									if ( this.getValue() )
-										element.setAttribute( 'multiple', this.getValue() );
-									else
-										element.removeAttribute( 'multiple' );
-								}
-							}
-						]
+		contents : [CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.settingTab, [{
+			type: "hbox",
+			widths: ["75%", "25%"],
+			children: [{
+				id: "dictSelect",
+				type: "select",
+				label: lang.zselect.dict,
+				items: [],
+				setup: function(name, element) {
+					if (name == "clear") {
+						
+					} else if (name == "option") {
+						this.setValue(element.getAttribute("dictCategory"));
 					}
-				]
-			}
+				},
+				commit: function(data) {
+					var element = data.element || data;
+					element.setAttribute("dictCategory", this.getValue());
+				}
+			}, {
+				id: "newDict",
+				type: "button",
+				label: lang.zselect.newDict,
+				title: lang.zselect.newDict,
+				onClick: function() {
+					//TODO Create new dictionary category
+				}
+			}]
+		}, {
+			type: "hbox",
+			widths: ["75%", "25%"],
+			children: [{
+				id: "displayType",
+				type: "select",
+				label: lang.zselect.displayType,
+				items: [
+					[lang.zselect.dispTypeList, "list"],
+					[lang.zselect.dispTypeRow, "row"]
+				],
+				setup: function(name, element) {
+					if (name == "clear") {
+						
+					} else if (name == "option") {
+						this.setValue(element.getAttribute("dispType"));
+					}
+				},
+				commit: function(data) {
+					var element = data.element || data;
+					element.setAttribute("dispType", this.getValue());
+				}
+			}, {
+				id: "multiSel",
+				type: "checkbox",
+				label: lang.zselect.multiSel,
+				setup: function(name, element) {
+					if (name == "clear") {
+						
+					} else if (name == "select") {
+						this.setValue(element.getAttribute("multiSel"));
+					}
+				},
+				commit: function(data) {
+					var element = data.element || data;
+					element.setAttribute("multiSel", this.getValue());
+				}
+			}]
+		}]),
+			CKEDITOR.zforms.mergeTab(CKEDITOR.zforms.validatorTab, [])
 		]
 	};
 });
