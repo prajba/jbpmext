@@ -35,7 +35,7 @@ import freemarker.template.TemplateException;
 @Transactional
 public class FormServiceH3 implements FormService {
 	private static final Logger logger = LogManager.getLogger(FormServiceH3.class);
-	private static final String HQL_FIND_ALL = "from MetaForm f";
+	private static final String HQL_FIND_ALL = "from MetaForm f order by f.formName asc, f.id desc";
 	private static final String mappingTemplateLocation = "/WEB-INF/classes/freemarker/";
 	
 	private TermedDAO dao;
@@ -128,5 +128,19 @@ public class FormServiceH3 implements FormService {
 			}
 		}
 		saveFormTable(form);
+	}
+
+	@Override
+	public List<MetaForm> findAllFormsMaxVer() {
+		List<MetaForm> all = findAllForms();
+		List<MetaForm> max = new ArrayList<MetaForm>(all.size() + 1);
+		MetaForm o = null;
+		for (MetaForm f: all) {
+			if (o == null || !o.getFormName().equals(f.getFormName())) {
+				max.add(f);
+				o = f;
+			}
+		}
+		return max;
 	}
 }

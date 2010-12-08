@@ -6,7 +6,10 @@ CKEDITOR.plugins.setLang("zforms", "en", { zforms: {
 		typeText: "Text",
 		typePass: "Password",
 		typeInt: "Integer",
-		typeFloat: "Float"
+		typeFloat: "Float",
+		typeDate: "Date",
+		typeTime: "Time",
+		typeTimestamp: "Date and time"
 	},
 	zselect: {
 		title: "Select",

@@ -15,5 +15,6 @@ import org.jbpmext.model.MetaForm;
 public interface FormService {
 	public void setDao(TermedDAO dao);
 	public List<MetaForm> findAllForms();
+	public List<MetaForm> findAllFormsMaxVer();
 	public void save(MetaForm form);
 }

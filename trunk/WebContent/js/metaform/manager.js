@@ -17,9 +17,8 @@ function colsToPost(frm) {
 }
 
 function saveForm(frm) {
-	var isNew = frm.id === undefined;
+	var isNew = !window.editingForm;
 	var pdata = $.extend(true, {
-		"form.id": frm.id || "",
 		"form.formName": frm.formName,
 		"form.tableName": frm.tableName,
 		"form.formHtml": frm.formHtml,
@@ -65,7 +64,7 @@ function showEditFormDialog(form) {
 }
 
 function updateEditedForm(form) {
-	var ix = $("#formlist").datagrid("getRowIndex", form.id);
+	var ix = $("#formlist").datagrid("getRowIndex", form.formName);
 	if (ix >= 0) {
 		$("#formlist").datagrid("selectRow", ix);
 		$.extend(true, $("#formlist").datagrid("getSelected"), form);
@@ -92,7 +91,7 @@ $(function() {
 		rownumbers: true,
 		sortName: "formName",
 		sortOrder: "asc",
-		idField: "id",
+		idField: "formName",
 		frozenColumns: [[{
 			title: formMessages.manager.columns.formName,
 			field: "formName",
