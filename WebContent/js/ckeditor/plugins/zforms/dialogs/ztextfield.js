@@ -86,7 +86,7 @@
 						this.setValue(element.getAttribute('type'));
 					},
 					commit: function(data) {
-						var element = data.element;
+						var element = data.element || data;
 	
 						if (CKEDITOR.env.ie) {
 							//如果是IE，必须重新写入标签
@@ -115,15 +115,19 @@
 					label: lang.ztextfield.dataType,
 					"default": "text",
 					items: [
-						[lang.ztextfield.typeText, "text"],
+						[lang.ztextfield.typeText, "string"],
 						[lang.ztextfield.typeInt, "int"],
-						[lang.ztextfield.typeFloat, "float"]
+						[lang.ztextfield.typeFloat, "float"],
+						[lang.ztextfield.typeDate, "date"],
+						[lang.ztextfield.typeTime, "time"],
+						[lang.ztextfield.typeTimestamp, "timestamp"]
 					],
 					setup: function(element) {
 						this.setValue(element.getAttribute("data_type"));
 					},
 					commit: function(data) {
-						data.element.setAttribute("data_type", this.getValue());
+						var element = data.element || data;
+						element.setAttribute("data_type", this.getValue());
 					}
 				}]
 		    }]),

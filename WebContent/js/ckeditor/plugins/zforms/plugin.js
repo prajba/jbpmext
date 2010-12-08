@@ -49,13 +49,16 @@ CKEDITOR.plugins.add('zforms', {
 					label: labels.ztextarea,
 					command: "ztextarea",
 					group: "textarea"
-				}
-			});
-			editor.addMenuItems({
+				},
 				textfield: {
 					label: labels.ztextfield,
 					command: "ztextfield",
 					group: "textfield"
+				},
+				select: {
+					label: labels.zselect,
+					command: "zselect",
+					group: "select"
 				}
 			});
 		}
@@ -73,6 +76,8 @@ CKEDITOR.plugins.add('zforms', {
 					evt.data.dialog = 'ztextfield';
 					break;
 				}
+			} else if (element.is("select")) {
+				evt.data.dialog = "zselect";
 			}
 		});
 

@@ -124,6 +124,15 @@
 			return obj;
 		return false;
 	}
+	function bindCatsToCombo(cats, element) {
+		//Add an empty option
+		addOption(element, "", "", element.getDialog().getParentEditor().document);
+		if (!cats || !cats.length) return;
+		for (var i = 0; i < cats.length; i ++) {
+			var c = cats[i];
+			addOption(element, c.displayName, c.id, element.getDialog().getParentEditor().document);
+		}
+	}
 
 	var lang = editor.lang.zforms;
 	return {
@@ -180,14 +189,21 @@
 				items: [],
 				setup: function(name, element) {
 					if (name == "clear") {
-						
+						removeAllOptions(this);
+						var sel = getSelect(this);
+						var cats = loadDictCats();
+						if (cats) {
+							bindCatsToCombo(cats, this);
+						}
 					} else if (name == "option") {
-						this.setValue(element.getAttribute("dictCategory"));
+						this.setValue(element.getAttribute("dict_category"));
 					}
 				},
 				commit: function(data) {
 					var element = data.element || data;
-					element.setAttribute("dictCategory", this.getValue());
+					element.setAttribute("dict_category", this.getValue());
+					var c = getDictCatById(this.getValue());
+					element.setAttribute("data_type", c.valueType);
 				}
 			}, {
 				id: "newDict",
@@ -195,6 +211,7 @@
 				label: lang.zselect.newDict,
 				title: lang.zselect.newDict,
 				onClick: function() {
+					jAlert(top.title, "Not implemented.");
 					//TODO Create new dictionary category
 				}
 			}]
@@ -213,12 +230,12 @@
 					if (name == "clear") {
 						
 					} else if (name == "option") {
-						this.setValue(element.getAttribute("dispType"));
+						this.setValue(element.getAttribute("disp_type"));
 					}
 				},
 				commit: function(data) {
 					var element = data.element || data;
-					element.setAttribute("dispType", this.getValue());
+					element.setAttribute("disp_type", this.getValue());
 				}
 			}, {
 				id: "multiSel",
@@ -228,12 +245,12 @@
 					if (name == "clear") {
 						
 					} else if (name == "select") {
-						this.setValue(element.getAttribute("multiSel"));
+						this.setValue(element.getAttribute("multi_sel"));
 					}
 				},
 				commit: function(data) {
 					var element = data.element || data;
-					element.setAttribute("multiSel", this.getValue());
+					element.setAttribute("multi_sel", this.getValue());
 				}
 			}]
 		}]),

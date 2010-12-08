@@ -12,17 +12,60 @@ function getColId(fldName) {
 	return "";
 }
 
+function getDictCatById(id) {
+	var cats = loadDictCats();
+	for (var i = 0; i < cats.length; i ++) {
+		var c = cats[i];
+		if (c.id == id) return c;
+	}
+	return null;
+}
+
+function loadDictCats() {
+	var cats = window.zselect_dictCats;
+	if (!cats) {
+		$.ajax({
+			async: false,
+			dataType: "json",
+			url: CONTEXT_ROOT + "/dict/listCats.action",
+			success: function(data, st, xhr) {
+				cats = data.rows;
+			}
+		});
+		window.zselect_dictCats = cats;
+	}
+	return cats;
+}
+
 function getCols(jqobj) {
 	var result = [];
 	jqobj.find(":input").each(function() {
 		var me = $(this);
+		var dispType = me.attr("display_type") || "text";
+		var tagName = this.tagName.toLowerCase();
+		if (tagName == "select") {
+			if (me.attr("multi_sel") == "true") {
+				if (me.attr("disp_type") == "list") {
+					dispType = "list";
+				} else {
+					dispType = "check";
+				}
+			} else {
+				if (me.attr("disp_type") == "list") {
+					dispType = "dropdown";
+				} else {
+					dispType = "radio";
+				}
+			}
+		}
+		
 		var col = {
-			id: me.attr("col_id") || getColId(me.attr("field_name")) || "",
+			//id: me.attr("col_id") || getColId(me.attr("field_name")) || "",
 			fieldName: me.attr("field_name"),
 			columnName: me.attr("column_name") || generateColumnName(),
 			inputHint: me.attr("input_hint"),
-			displayType: me.attr("display_type") || "text",
-			dataType: me.attr("data_type") || "text",
+			displayType: dispType,
+			dataType: me.attr("data_type") || "string",
 			dictCategory: me.attr("dict_category"),
 			//TODO Resolve multi-line remarks and validators
 			remarks: me.attr("remarks"),
@@ -51,8 +94,8 @@ function objectToForm(frm) {
 }
 
 function disableNoneditables() {
-	$("#formName").replaceWith($("#formName").val());
-	$("#tableName").replaceWith($("#tableName").val());
+	$("#formName").addClass("hidden").parent().append($("#formName").val());
+	$("#tableName").addClass("hidden").parent().append($("#tableName").val());
 }
 
 function initFormEditor() {
@@ -66,8 +109,8 @@ function initFormEditor() {
 
 window.editorSaveClicked = function() {
 	var frm = formToObject();
-	$.extend(true, window.editingForm, frm);
-	opener.__editorOpener.saveForm(window.editingForm);
+	//$.extend(true, window.editingForm, frm);
+	opener.__editorOpener.saveForm(frm);
 };
 
 function initCKEditor() {
@@ -98,6 +141,7 @@ function initCKEditor() {
 
 $(function() {
 	doEditorLayout("#editor");
+	loadDictCats();
 	initCKEditor();
 	initFormEditor();
 });

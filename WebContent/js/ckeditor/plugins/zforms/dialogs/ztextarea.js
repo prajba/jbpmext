@@ -22,6 +22,7 @@
 				editor = this.getParentEditor();
 				element = editor.document.createElement('textarea');
 				element.setAttribute("style", "display:block;");
+				element.setAttribute("data_type", "text");
 			}
 			this.commitContent( element );
 

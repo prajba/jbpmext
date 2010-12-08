@@ -33,7 +33,6 @@ public class MetaForm implements Serializable, Termed {
 	private Date endTime;
 	private int usableStatus;
 	private boolean sysPreset;
-	private int version;
 	private List<MetaField> fields;
 	
 	@Id
@@ -110,14 +109,6 @@ public class MetaForm implements Serializable, Termed {
 		this.sysPreset = sysPreset;
 	}
 	
-	@Column(name="version", nullable=false)
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
 	@OneToMany(mappedBy="form", cascade={CascadeType.PERSIST})
 	public List<MetaField> getFields() {
 		return fields;

@@ -6,7 +6,10 @@ CKEDITOR.plugins.setLang("zforms", "zh-cn", { zforms: {
 		typeText: "文字",
 		typePass: "密码",
 		typeInt: "整数",
-		typeFloat: "小数"
+		typeFloat: "小数",
+		typeDate: "日期",
+		typeTime: "时间",
+		typeTimestamp: "日期时间"
 	},
 	zselect: {
 		title: "选择",
