@@ -22,7 +22,7 @@ function closeEditorDialog() {
 
 function openUrl(url, eventSrc) {
 	if (url.charAt(0) == '/') url = CONTEXT_ROOT + url;
-	var tabTitle = eventSrc.innerText;
+	var tabTitle = $(eventSrc).text();
 	if ($("#tabpanes").tabs("exists", tabTitle)) {
 		$("#tabpanes").tabs("select", tabTitle);
 	} else {
