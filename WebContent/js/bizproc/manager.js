@@ -79,7 +79,7 @@ function stopProc() {
 $(function() {
 	$("#proclist").datagrid({
 		title: procMessages.manager.gridTitle,
-		iconCls: "icon-proc-man",
+		iconCls: "icon-procs",
 		url: CONTEXT_ROOT + "/bizproc/list.action",
 		striped: true,
 		singleSelect: true,

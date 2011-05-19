@@ -26,11 +26,11 @@ function manHandler() {
 	if (!cat) {
 		showAlert(top.title, msgs.noneSelected);
 	} else {
-		$("<form method='post' action='" + CONTEXT_ROOT + "/dict/catManager.action'>"
+		$("<form name='frmMan' class='hidden' method='post' action='" + CONTEXT_ROOT + "/dict/catManager.action'>"
 				+ "<input name='cat.id' value='" + cat.id
 				+ "'/><input name='cat.displayName' value='" + cat.displayName
 				+ "'/><input name='cat.valueType' value='" + cat.valueType
-				+ "'/></form>").submit();
+				+ "'/></form>").appendTo($(document.body)).submit();
 	}
 }
 
@@ -90,7 +90,7 @@ function delHandler() {
 $(function() {
 	$(__GRID_ID).datagrid({
 		title: dictMessages.catManager.gridTitle,
-		iconCls: "icon-cat-man",
+		iconCls: "icon-book",
 		url: CONTEXT_ROOT + "/dict/listCats.action",
 		striped: true,
 		singleSelect: true,
@@ -131,7 +131,7 @@ $(function() {
 		}, "-", {
 			id: "manCategory",
 			text: dictMessages.catManager.toolbar.manCategory,
-			iconCls: "icon-dict",
+			iconCls: "icon-entries",
 			handler: manHandler
 		}]
 	});

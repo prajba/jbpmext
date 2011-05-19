@@ -86,7 +86,7 @@ $(function() {
 	valueType = $("#valType").text();
 	$(__GRID_ID).datagrid({
 		title: dictMessages.entryManager.gridTitle + ":" + catName,
-		iconCls: "icon-entry-man",
+		iconCls: "icon-entries",
 		url: CONTEXT_ROOT + "/dict/listEntries.action?cat.id=" + catId,
 		striped: true,
 		singleSelect: true,

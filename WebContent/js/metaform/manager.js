@@ -84,7 +84,7 @@ function editForm() {
 $(function() {
 	$("#formlist").datagrid({
 		title: formMessages.manager.gridTitle,
-		iconCls: "icon-form-man",
+		iconCls: "icon-form",
 		url: CONTEXT_ROOT + "/metaform/list.action",
 		striped: true,
 		singleSelect: true,

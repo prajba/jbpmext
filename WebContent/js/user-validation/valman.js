@@ -97,7 +97,7 @@ function delValidator() {
 $(function() {
 	$("#vallist").datagrid({
 		title: valMessages.manager.gridTitle,
-		iconCls: "icon-val-man",
+		iconCls: "icon-validation",
 		url: CONTEXT_ROOT + "/validation/list.action",
 		striped: true,
 		singleSelect: true,
