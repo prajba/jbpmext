@@ -69,7 +69,7 @@ function getCols(jqobj) {
 			dictCategory: me.attr("dict_category"),
 			//TODO Resolve multi-line remarks and validators
 			remarks: me.attr("remarks"),
-			validatorXml: me.attr("validator_xml")
+			validators: me.attr("validator_xml")
 		};
 		result.push(col);
 	});
