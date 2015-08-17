@@ -80,7 +80,7 @@
 				},
 				text : {
 				    cursor : "move",
-                    'background' : '#000'
+                                    'background' : '#000'
 				}
 			},
 			text : {
